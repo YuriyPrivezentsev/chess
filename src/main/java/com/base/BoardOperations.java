@@ -7,7 +7,7 @@ package com.base;
  * @since 10/12/2015
  */
 public class BoardOperations {
-    public static final int MARKER = 1;
+    public static final int TAKEN = 1;
 
     public static void printBoard(int[][] board) {
         for (int i = 0; i < board.length; i++ ) {

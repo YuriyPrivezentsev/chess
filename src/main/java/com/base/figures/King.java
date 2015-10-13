@@ -10,6 +10,7 @@ import com.base.Position;
  * @since 10/12/2015
  */
 public class King extends AbstractFigure {
+    private static final String NAME = "K";
 
     public King(Position position) {
         super(position);
@@ -20,14 +21,19 @@ public class King extends AbstractFigure {
     }
 
     public void fillInBoard(int[][] board) {
-        int xStart = getPosition().getX() != 0 ? getPosition().getX() - 1 : 0;
-        int xFinish = getPosition().getX() < board.length - 1 ? getPosition().getX() + 1 : board.length - 1;
-        int yStart = getPosition().getY() != 0 ? getPosition().getY() - 1 : 0;
-        int yFinish = getPosition().getY() < board.length - 1 ? getPosition().getY() + 1 : board.length - 1;
+        int xStart = getPosition().getLine() != 0 ? getPosition().getLine() - 1 : 0;
+        int xFinish = getPosition().getLine() < board.length - 1 ? getPosition().getLine() + 1 : board.length - 1;
+        int yStart = getPosition().getColumn() != 0 ? getPosition().getColumn() - 1 : 0;
+        int yFinish = getPosition().getColumn() < board.length - 1 ? getPosition().getColumn() + 1 : board.length - 1;
         for(int i = xStart; i <= xFinish; i++ ){
             for (int j = yStart; j <= yFinish; j++){
-                board[i][j] = BoardOperations.MARKER;
+                board[i][j] = BoardOperations.TAKEN;
             }
         }
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 }

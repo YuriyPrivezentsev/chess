@@ -19,4 +19,10 @@ public interface Figure {
      * Current figure position.
      */
     Position getPosition();
+
+    /**
+     * Gets the letter mark for the figure
+     * @return
+     */
+    String getName();
 }

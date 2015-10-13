@@ -9,6 +9,7 @@ import com.base.Position;
  * @since 10/12/2015
  */
 public class Queen extends LongDistanceFigure {
+    private static final String NAME = "Q";
 
     public Queen(Position position) {
         super(position);
@@ -21,5 +22,10 @@ public class Queen extends LongDistanceFigure {
     public void fillInBoard(int[][] board) {
         fillDiagonals(board);
         fillLines(board);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 }
