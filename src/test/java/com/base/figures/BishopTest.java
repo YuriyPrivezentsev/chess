@@ -21,7 +21,7 @@ public class BishopTest extends FigureTest {
                 {0, 0, 1, 0, 0},
                 {0, 1, 0, 1, 0},
                 {1, 0, 0, 0, 1}};
-        performTest(bishop, checkBoard, getNewBoard());
+        performTest(bishop, checkBoard, 5, 5);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class BishopTest extends FigureTest {
                 {0, 1, 0, 0, 0},
                 {0, 0, 1, 0, 0},
                 {0, 0, 0, 1, 0}};
-        performTest(bishop, checkBoard, getNewBoard());
+        performTest(bishop, checkBoard, 5, 5);
     }
 
     @Test
@@ -47,6 +47,6 @@ public class BishopTest extends FigureTest {
                 {0, 0, 1, 0, 0},
                 {0, 0, 0, 1, 0},
                 {0, 0, 0, 0, 1}};
-        performTest(bishop, checkBoard, getNewBoard());
+        performTest(bishop, checkBoard, 5, 5);
     }
 }

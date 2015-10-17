@@ -1,6 +1,9 @@
 package com.base.figures;
 
+import com.base.FigureBoard;
 import com.base.Position;
+
+import java.util.Collection;
 
 /**
  * Interface representing chess figure.
@@ -10,10 +13,12 @@ import com.base.Position;
  */
 public interface Figure {
     /**
-     * Mark all the fields which are threatened by this figure, including the figure position.
-     * @param board — the board to be marked
+     * Try to position figure on board making sure it neither can be taken nor can take other figures on board.
+     *
+     * @param resultBoard - the board with figures placed
+     * @return - The collection of positions which can be attacked by the figure, including its own place
      */
-    void fillInBoard(int[][] board);
+    Collection<Position> placeOnBoard(FigureBoard resultBoard);
 
     /**
      * Current figure position.

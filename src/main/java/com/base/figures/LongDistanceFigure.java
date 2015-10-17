@@ -1,7 +1,13 @@
 package com.base.figures;
 
 import com.base.BoardOperations;
+import com.base.FigureBoard;
 import com.base.Position;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Parent class for figures, which can go across all board.
@@ -15,31 +21,67 @@ public abstract class LongDistanceFigure  extends AbstractFigure {
         super(position);
     }
 
-    protected void fillLines(int[][] board) {
-        int size = board.length;
-        for (int i = 0; i < size; i++) {
-            board[i][getPosition().getColumn()] = BoardOperations.TAKEN;
-            board[getPosition().getLine()][i] = BoardOperations.TAKEN;
+    protected Collection<Position> fillLines(FigureBoard resultBoard) {
+        int height = resultBoard.getHeight();
+        int width = resultBoard.getWidth();
+        Collection<Position> lineCoverage = new ArrayList<>(height+width);
+
+        for (int line = 0; line < height; line++) {
+            if (!addCoverage(lineCoverage, resultBoard, line, getPosition().getColumn())){
+                return EMPTY_RESULT;
+            }
         }
+
+        for (int column = 0; column < width; column++){
+            if (!addCoverage(lineCoverage, resultBoard, getPosition().getLine(), column)){
+                return EMPTY_RESULT;
+            }
+        }
+
+        return lineCoverage;
     }
 
-    protected void fillDiagonals(int[][] board) {
-        int size = board.length;
-        for (int i = getPosition().getLine(), j = getPosition().getColumn(); i < size && j < size; i++, j++) {
-            board[i][j] = BoardOperations.TAKEN;
+    protected Collection<Position> fillDiagonals(FigureBoard resultBoard) {
+
+        int height = resultBoard.getHeight();
+        int width = resultBoard.getWidth();
+
+        int diagonalLengthEstimate = (height + width) * 2;
+        Collection<Position> diagonalCoverage = new ArrayList<>(diagonalLengthEstimate);
+
+        for (int line = getPosition().getLine(), column = getPosition().getColumn();
+             line < height && column < width;
+             line++, column++) {
+            if (!addCoverage(diagonalCoverage, resultBoard, line, column)){
+                return EMPTY_RESULT;
+            }
         }
 
-        for (int i = getPosition().getLine() - 1, j = getPosition().getColumn() - 1; i >= 0 && j >= 0; i--, j--) {
-            board[i][j] = BoardOperations.TAKEN;
+        for (int line = getPosition().getLine() - 1, column = getPosition().getColumn() - 1;
+             line >= 0 && column >= 0;
+             line--, column--) {
+            if (!addCoverage(diagonalCoverage, resultBoard, line, column)){
+                return EMPTY_RESULT;
+            }
         }
 
-        for (int i = getPosition().getLine() + 1, j = getPosition().getColumn() - 1; i < size && j >= 0; i++, j--) {
-            board[i][j] = BoardOperations.TAKEN;
+        for (int line = getPosition().getLine() + 1, column = getPosition().getColumn() - 1;
+             line < height && column >= 0;
+             line++, column--) {
+            if (!addCoverage(diagonalCoverage, resultBoard, line, column)){
+                return EMPTY_RESULT;
+            }
         }
 
-        for (int i = getPosition().getLine() - 1, j = getPosition().getColumn() + 1; i >= 0 && j < size; i--, j++) {
-            board[i][j] = BoardOperations.TAKEN;
+        for (int line = getPosition().getLine() - 1, column = getPosition().getColumn() + 1;
+             line >= 0 && column < width;
+             line--, column++) {
+            if (!addCoverage(diagonalCoverage, resultBoard, line, column)){
+                return EMPTY_RESULT;
+            }
         }
+
+        return diagonalCoverage;
     }
 
 }

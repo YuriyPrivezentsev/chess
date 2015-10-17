@@ -1,6 +1,10 @@
 package com.base.figures;
 
+import com.base.FigureBoard;
 import com.base.Position;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Bishop functionality implementation.
@@ -20,7 +24,7 @@ public class Bishop  extends LongDistanceFigure {
         return NAME;
     }
 
-    public void fillInBoard(int[][] board) {
-        fillDiagonals(board);
+    public Collection<Position> placeOnBoard(FigureBoard resultBoard) {
+        return fillDiagonals(resultBoard);
     }
 }

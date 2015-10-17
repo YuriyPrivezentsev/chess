@@ -1,6 +1,9 @@
 package com.base.figures;
 
+import com.base.FigureBoard;
 import com.base.Position;
+
+import java.util.Collection;
 
 /**
  * Rook functionality implementation.
@@ -15,8 +18,8 @@ public class Rook extends LongDistanceFigure {
         super(position);
     }
 
-    public void fillInBoard(int[][] board) {
-        fillLines(board);
+    public Collection<Position> placeOnBoard(FigureBoard resultBoard) {
+        return fillLines(resultBoard);
     }
 
     @Override

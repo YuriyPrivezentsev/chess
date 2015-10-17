@@ -19,7 +19,7 @@ public class RookTest extends FigureTest {
                                 {1,1,1,1,1},
                                 {0,0,1,0,0},
                                 {0,0,1,0,0}};
-        performTest(rook, checkBoard, getNewBoard());
+        performTest(rook, checkBoard, 5, 5);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class RookTest extends FigureTest {
                                 {1,0,0,0,0},
                                 {1,0,0,0,0},
                                 {1,0,0,0,0}};
-        performTest(rook, checkBoard, getNewBoard());
+        performTest(rook, checkBoard, 5, 5);
     }
 
     @Test
@@ -43,6 +43,6 @@ public class RookTest extends FigureTest {
                                 {0,0,0,0,1},
                                 {0,0,0,0,1},
                                 {1,1,1,1,1}};
-        performTest(rook, checkBoard, getNewBoard());
+        performTest(rook, checkBoard, 5, 5);
     }
 }

@@ -1,5 +1,6 @@
 package com.base;
 
+import java.util.Collection;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -11,15 +12,24 @@ import java.util.TreeSet;
  */
 public class FreeCellsBoard extends AbstractBoard {
     public static final String TAKEN_POSITION_MARKER = "X";
-    private SortedSet<Position> freeCells = new TreeSet<>();
+    private final SortedSet<Position> freeCells = new TreeSet<>();
+
+    private FreeCellsBoard(int width, int height, SortedSet<Position> freeCells) {
+        super(width, height);
+        this.freeCells.addAll(freeCells);
+    }
 
     public FreeCellsBoard(int width, int height) {
-        super(width,height);
+        super(width, height);
         for(int i = 0; i < height; i++){
             for (int j= 0; j < width; j++){
                 freeCells.add(new Position(i,j, this));
             }
         }
+    }
+
+    public void occupyCells(Collection<Position> figureCoverage){
+        freeCells.removeAll(figureCoverage);
     }
 
     public void occupyCell(Position occupied){
@@ -28,6 +38,14 @@ public class FreeCellsBoard extends AbstractBoard {
 
     public Position getFirstFreeCell(){
         return freeCells.first();
+    }
+
+    public boolean isCellFree(Position position){
+        return freeCells.contains(position);
+    }
+
+    public FreeCellsBoard deepCopy(){
+        return new FreeCellsBoard(getWidth(),getHeight(),freeCells);
     }
 
     @Override

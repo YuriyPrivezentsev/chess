@@ -19,7 +19,7 @@ public class QueenTest extends FigureTest {
                                 {1,1,1,1,1},
                                 {0,1,1,1,0},
                                 {1,0,1,0,1}};
-        performTest(queen, checkBoard, getNewBoard());
+        performTest(queen, checkBoard, 5, 5);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class QueenTest extends FigureTest {
                                 {1,1,0,0,0},
                                 {1,0,1,0,0},
                                 {1,0,0,1,0}};
-        performTest(queen, checkBoard, getNewBoard());
+        performTest(queen, checkBoard, 5, 5);
     }
 
     @Test
@@ -43,6 +43,6 @@ public class QueenTest extends FigureTest {
                                 {0,0,1,0,1},
                                 {0,0,0,1,1},
                                 {1,1,1,1,1}};
-        performTest(queen, checkBoard, getNewBoard());
+        performTest(queen, checkBoard, 5, 5);
     }
 }

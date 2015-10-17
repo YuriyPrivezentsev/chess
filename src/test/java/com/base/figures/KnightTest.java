@@ -20,11 +20,6 @@ public class KnightTest extends FigureTest {
         Mockito.when(baseBoard.getWidth()).thenReturn(7);
     }
 
-    @Override
-    protected int[][] getNewBoard() {
-        return new int[7][7];
-    }
-
     @Test
     public void testBoardFillCentral() {
         Position knightPosition = new Position(3, 3, baseBoard);
@@ -37,7 +32,7 @@ public class KnightTest extends FigureTest {
                 {0, 1, 0, 0, 0, 1, 0},
                 {0, 0, 1, 0, 1, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0}};
-        performTest(knight, checkBoard, getNewBoard());
+        performTest(knight, checkBoard, 7, 7);
     }
 
     @Test
@@ -52,7 +47,7 @@ public class KnightTest extends FigureTest {
                 {0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0}};
-        performTest(knight, checkBoard, getNewBoard());
+        performTest(knight, checkBoard, 7, 7);
     }
 
     @Test
@@ -67,6 +62,6 @@ public class KnightTest extends FigureTest {
                 {0, 0, 0, 0, 0, 1, 0},
                 {0, 0, 0, 0, 1, 0, 0},
                 {0, 0, 0, 0, 0, 0, 1}};
-        performTest(knight, checkBoard, getNewBoard());
+        performTest(knight, checkBoard, 7, 7);
     }
 }

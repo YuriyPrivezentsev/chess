@@ -1,13 +1,18 @@
 package com.base.figures;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import com.base.Board;
-import com.base.BoardOperations;
+import com.base.*;
 import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
 
 /**
  * Common figure test functionality
@@ -16,6 +21,7 @@ import org.mockito.MockitoAnnotations;
  * @since 10/12/2015
  */
 public abstract class FigureTest {
+    private static final Logger LOG = LoggerFactory.getLogger(FigureTest.class);
     @Mock
     protected Board baseBoard;
 
@@ -25,16 +31,23 @@ public abstract class FigureTest {
         Mockito.when(baseBoard.getWidth()).thenReturn(5);
     }
 
-    protected void performTest(Figure queen, int[][] checkBoard, int[][] board) {
-        queen.fillInBoard(board);
-        BoardOperations.printBoard(board);
-        for (int i = 0; i < board.length; i++ ) {
-            for (int j = 0 ; j < board.length; j ++){
-                assertEquals(checkBoard[i][j], board[i][j]);
+    protected void performTest(Figure queen, int[][] checkBoard, int width, int height) {
+        FigureBoard figureBoard = new FigureBoard(width, height);
+        FreeCellsBoard freeCellsBoard = new FreeCellsBoard(width, height);
+
+        Collection<Position> figureCoverage = queen.placeOnBoard(figureBoard);
+        freeCellsBoard.occupyCells(figureCoverage);
+        LOG.info(freeCellsBoard.toString());
+
+        for (int line = 0; line < height; line++ ) {
+            for (int column = 0 ; column < width; column ++){
+                boolean isFree = freeCellsBoard.isCellFree(new Position(line, column, figureBoard));
+                if(checkBoard[line][column] == 1){
+                    assertFalse(isFree);
+                } else {
+                    assertTrue(isFree);
+                }
             }
         }
-    }
-    protected int[][] getNewBoard() {
-        return new int[5][5];
     }
 }

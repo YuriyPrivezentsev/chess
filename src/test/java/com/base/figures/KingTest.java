@@ -19,7 +19,7 @@ public class KingTest extends FigureTest {
                                 {0,1,1,1,0},
                                 {0,1,1,1,0},
                                 {0,0,0,0,0}};
-        performTest(king, checkBoard, getNewBoard());
+        performTest(king, checkBoard, 5, 5);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class KingTest extends FigureTest {
                                 {1,1,0,0,0},
                                 {0,0,0,0,0},
                                 {0,0,0,0,0}};
-        performTest(king, checkBoard, getNewBoard());
+        performTest(king, checkBoard, 5, 5);
     }
 
     @Test
@@ -43,6 +43,6 @@ public class KingTest extends FigureTest {
                                 {0,0,0,0,0},
                                 {0,0,0,1,1},
                                 {0,0,0,1,1}};
-        performTest(king, checkBoard, getNewBoard());
+        performTest(king, checkBoard, 5, 5);
     }
 }
