@@ -36,4 +36,19 @@ public class FigureBoard extends AbstractBoard{
                     + " were was " + removed.getName());
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder boardRepresentation = new StringBuilder();
+        for (int i = 0; i < getHeight(); i++){
+            boardRepresentation.append("\r\n");
+            for (int j = 0; j < getWidth(); j++){
+                Position position = new Position(i, j, this);
+                Figure figure = figures.get(position);
+                boardRepresentation.append(figure == null ? FREE_POSITION_MARKER : figure.getName());
+                boardRepresentation.append(" ");
+            }
+        }
+        return boardRepresentation.toString();
+    }
 }

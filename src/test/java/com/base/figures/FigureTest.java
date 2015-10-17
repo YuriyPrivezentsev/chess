@@ -22,7 +22,7 @@ public abstract class FigureTest {
     @Before
     public void init(){
         MockitoAnnotations.initMocks(this);
-        Mockito.when(baseBoard.getHeight()).thenReturn(5);
+        Mockito.when(baseBoard.getWidth()).thenReturn(5);
     }
 
     protected void performTest(Figure queen, int[][] checkBoard, int[][] board) {

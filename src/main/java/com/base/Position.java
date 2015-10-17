@@ -14,7 +14,7 @@ public class Position implements Comparable<Position>{
     public Position(int line, int column, Board board) {
         this.line = line;
         this.column = column;
-        weightOnBoard = line * board.getHeight() + column;
+        weightOnBoard = line * board.getWidth()+ column;
     }
 
     public int getLine() {

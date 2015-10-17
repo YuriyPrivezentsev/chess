@@ -10,7 +10,7 @@ import com.base.Position;
  * @since 10/12/2015
  */
 public class Knight extends AbstractFigure {
-    private static final String NAME = "B";
+    private static final String NAME = "N";
 
     public Knight(Position position) {
         super(position);

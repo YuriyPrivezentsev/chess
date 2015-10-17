@@ -22,7 +22,7 @@ public class PositionTest {
     @Before
     public void init(){
         MockitoAnnotations.initMocks(this);
-        Mockito.when(board.getHeight()).thenReturn(2);
+        Mockito.when(board.getWidth()).thenReturn(5);
     }
     @Test
     public void testCompareLess() {
@@ -35,8 +35,8 @@ public class PositionTest {
 
     @Test
     public void testCompareSymmetrical() {
-        Position position = new Position(1, 2, board);
-        assertTrue(position.compareTo(new Position(2, 1, board)) < 0);
+        Position position = new Position(0, 2, board);
+        assertTrue(position.compareTo(new Position(1, 0, board)) < 0);
     }
 
 

@@ -17,7 +17,7 @@ public class KnightTest extends FigureTest {
     @Override
     public void init() {
         MockitoAnnotations.initMocks(this);
-        Mockito.when(baseBoard.getHeight()).thenReturn(7);
+        Mockito.when(baseBoard.getWidth()).thenReturn(7);
     }
 
     @Override

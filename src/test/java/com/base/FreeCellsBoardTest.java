@@ -20,7 +20,15 @@ public class FreeCellsBoardTest {
 
         assertEquals(freeCell.getColumn(),1);
         assertEquals(freeCell.getLine(),0);
+    }
 
+    @Test
+    public void testToString() {
+        FreeCellsBoard freeCellsBoard = new FreeCellsBoard(2, 2);
+        freeCellsBoard.occupyCell(new Position(0,1,freeCellsBoard));
+
+        String boardView = "\r\n- X \r\n- - ";
+        assertEquals(boardView,freeCellsBoard.toString());
     }
 
 }

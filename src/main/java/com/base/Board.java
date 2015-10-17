@@ -7,6 +7,8 @@ package com.base;
  * @since 10/17/2015
  */
 public interface Board {
+    String FREE_POSITION_MARKER = "-";
+
     int getWidth();
     int getHeight();
 }
