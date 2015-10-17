@@ -22,7 +22,6 @@ public interface Figure {
 
     /**
      * Gets the letter mark for the figure
-     * @return
      */
     String getName();
 }
