@@ -9,7 +9,7 @@ import org.junit.Test;
  * @author Yuriy Privezentsev
  * @since 10/12/2015
  */
-public class RookTest extends FigureTest {
+public class RookTest extends FigureTest<Rook> {
     @Test
     public void testBoardFillCentral() {
         Position rookPosition = new Position(2, 2, baseBoard);
@@ -44,5 +44,10 @@ public class RookTest extends FigureTest {
                                 {0,0,0,0,1},
                                 {1,1,1,1,1}};
         performTest(rook, checkBoard, 5, 5);
+    }
+
+    @Override
+    protected Rook getNewFigure(Position position) {
+        return new Rook(position);
     }
 }

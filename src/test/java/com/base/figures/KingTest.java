@@ -9,7 +9,7 @@ import org.junit.Test;
  * @author Yuriy Privezentsev
  * @since 10/12/2015
  */
-public class KingTest extends FigureTest {
+public class KingTest extends FigureTest<King> {
     @Test
     public void testBoardFillCentral() {
         Position kingPosition = new Position(2, 2, baseBoard);
@@ -44,5 +44,10 @@ public class KingTest extends FigureTest {
                                 {0,0,0,1,1},
                                 {0,0,0,1,1}};
         performTest(king, checkBoard, 5, 5);
+    }
+
+    @Override
+    protected King getNewFigure(Position position) {
+        return new King(position);
     }
 }

@@ -1,5 +1,6 @@
 package com.base.figures;
 
+import com.base.FigureBoard;
 import com.base.Position;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,12 +13,22 @@ import org.mockito.MockitoAnnotations;
  * @author Yuriy Privezentsev
  * @since 10/12/2015
  */
-public class KnightTest extends FigureTest {
+public class KnightTest extends FigureTest<Knight> {
     @Before
     @Override
     public void init() {
         MockitoAnnotations.initMocks(this);
         Mockito.when(baseBoard.getWidth()).thenReturn(7);
+    }
+
+    @Override
+    protected Position getOverlappingPosition(FigureBoard figureBoard) {
+        return new Position(2,3,figureBoard);
+    }
+
+    @Override
+    protected Knight getNewFigure(Position position) {
+        return new Knight(position);
     }
 
     @Test
