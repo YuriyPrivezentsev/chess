@@ -16,10 +16,6 @@ public class King extends AbstractFigure {
         super(position);
     }
 
-    public King(int x, int y) {
-        super(x, y);
-    }
-
     public void fillInBoard(int[][] board) {
         int xStart = getPosition().getLine() != 0 ? getPosition().getLine() - 1 : 0;
         int xFinish = getPosition().getLine() < board.length - 1 ? getPosition().getLine() + 1 : board.length - 1;

@@ -1,5 +1,6 @@
 package com.base.figures;
 
+import com.base.Position;
 import org.junit.Test;
 
 /**
@@ -11,34 +12,37 @@ import org.junit.Test;
 public class KingTest extends FigureTest {
     @Test
     public void testBoardFillCentral() {
-        King king = new King(2, 2);
+        Position kingPosition = new Position(2, 2, baseBoard);
+        King king = new King(kingPosition);
         int [][] checkBoard = { {0,0,0,0,0},
                                 {0,1,1,1,0},
                                 {0,1,1,1,0},
                                 {0,1,1,1,0},
                                 {0,0,0,0,0}};
-        performTest(king, checkBoard, new int [5][5]);
+        performTest(king, checkBoard, getNewBoard());
     }
 
     @Test
     public void testBoardFillSide() {
-        King king = new King(1, 0);
+        Position kingPosition = new Position(1, 0, baseBoard);
+        King king = new King(kingPosition);
         int [][] checkBoard = { {1,1,0,0,0},
                                 {1,1,0,0,0},
                                 {1,1,0,0,0},
                                 {0,0,0,0,0},
                                 {0,0,0,0,0}};
-        performTest(king, checkBoard, new int [5][5]);
+        performTest(king, checkBoard, getNewBoard());
     }
 
     @Test
     public void testBoardFillCornerCase() {
-        King king = new King(4, 4);
+        Position kingPosition = new Position(4, 4, baseBoard);
+        King king = new King(kingPosition);
         int [][] checkBoard = { {0,0,0,0,0},
                                 {0,0,0,0,0},
                                 {0,0,0,0,0},
                                 {0,0,0,1,1},
                                 {0,0,0,1,1}};
-        performTest(king, checkBoard, new int [5][5]);
+        performTest(king, checkBoard, getNewBoard());
     }
 }

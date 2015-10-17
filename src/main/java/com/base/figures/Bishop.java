@@ -15,10 +15,6 @@ public class Bishop  extends LongDistanceFigure {
         super(position);
     }
 
-    public Bishop(int x, int y) {
-        super(x, y);
-    }
-
     @Override
     public String getName() {
         return NAME;

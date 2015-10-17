@@ -1,5 +1,6 @@
 package com.base.figures;
 
+import com.base.Position;
 import org.junit.Test;
 
 /**
@@ -11,34 +12,37 @@ import org.junit.Test;
 public class RookTest extends FigureTest {
     @Test
     public void testBoardFillCentral() {
-        Rook rook = new Rook(2, 2);
+        Position rookPosition = new Position(2, 2, baseBoard);
+        Rook rook = new Rook(rookPosition);
         int [][] checkBoard = { {0,0,1,0,0},
                                 {0,0,1,0,0},
                                 {1,1,1,1,1},
                                 {0,0,1,0,0},
                                 {0,0,1,0,0}};
-        performTest(rook, checkBoard, new int [5][5]);
+        performTest(rook, checkBoard, getNewBoard());
     }
 
     @Test
     public void testBoardFillSide() {
-        Rook rook = new Rook(1, 0);
+        Position rookPosition = new Position(1, 0, baseBoard);
+        Rook rook = new Rook(rookPosition);
         int [][] checkBoard = { {1,0,0,0,0},
                                 {1,1,1,1,1},
                                 {1,0,0,0,0},
                                 {1,0,0,0,0},
                                 {1,0,0,0,0}};
-        performTest(rook, checkBoard, new int [5][5]);
+        performTest(rook, checkBoard, getNewBoard());
     }
 
     @Test
     public void testBoardFillCornerCase() {
-        Rook rook = new Rook(4, 4);
+        Position rookPosition = new Position(4, 4, baseBoard);
+        Rook rook = new Rook(rookPosition);
         int [][] checkBoard = { {0,0,0,0,1},
                                 {0,0,0,0,1},
                                 {0,0,0,0,1},
                                 {0,0,0,0,1},
                                 {1,1,1,1,1}};
-        performTest(rook, checkBoard, new int [5][5]);
+        performTest(rook, checkBoard, getNewBoard());
     }
 }

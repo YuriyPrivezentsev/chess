@@ -1,7 +1,13 @@
 package com.base.figures;
 
 import static org.junit.Assert.assertEquals;
+
+import com.base.Board;
 import com.base.BoardOperations;
+import org.junit.Before;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 /**
  * Common figure test functionality
@@ -10,6 +16,15 @@ import com.base.BoardOperations;
  * @since 10/12/2015
  */
 public abstract class FigureTest {
+    @Mock
+    protected Board baseBoard;
+
+    @Before
+    public void init(){
+        MockitoAnnotations.initMocks(this);
+        Mockito.when(baseBoard.getHeight()).thenReturn(5);
+    }
+
     protected void performTest(Figure queen, int[][] checkBoard, int[][] board) {
         queen.fillInBoard(board);
         BoardOperations.printBoard(board);
@@ -18,5 +33,8 @@ public abstract class FigureTest {
                 assertEquals(checkBoard[i][j], board[i][j]);
             }
         }
+    }
+    protected int[][] getNewBoard() {
+        return new int[5][5];
     }
 }

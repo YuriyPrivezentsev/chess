@@ -14,8 +14,8 @@ public class FreeCellsBoardTest {
     @Test
     public void testFreeCell() {
 
-        FreeCellsBoard freeCellsBoard = new FreeCellsBoard(2);
-        freeCellsBoard.occupyCell(new Position(0,0));
+        FreeCellsBoard freeCellsBoard = new FreeCellsBoard(2,2);
+        freeCellsBoard.occupyCell(new Position(0,0, freeCellsBoard));
         Position freeCell = freeCellsBoard.getFirstFreeCell();
 
         assertEquals(freeCell.getColumn(),1);

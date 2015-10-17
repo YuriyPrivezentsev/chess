@@ -15,11 +15,6 @@ public abstract class LongDistanceFigure  extends AbstractFigure {
         super(position);
     }
 
-
-    public LongDistanceFigure(int x, int y) {
-        super(x, y);
-    }
-
     protected void fillLines(int[][] board) {
         int size = board.length;
         for (int i = 0; i < size; i++) {

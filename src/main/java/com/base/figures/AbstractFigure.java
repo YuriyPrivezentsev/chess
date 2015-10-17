@@ -15,10 +15,6 @@ public abstract class AbstractFigure implements Figure{
         this.position = position;
     }
 
-    public AbstractFigure(int x, int y) {
-        this.position = new Position(x,y);
-    }
-
     public Position getPosition() {
         return position;
     }

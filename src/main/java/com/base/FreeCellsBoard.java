@@ -1,6 +1,5 @@
 package com.base;
 
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -10,15 +9,14 @@ import java.util.TreeSet;
  * @author Yuriy Privezentsev
  * @since 10/13/2015
  */
-public class FreeCellsBoard {
+public class FreeCellsBoard extends AbstractBoard {
     private SortedSet<Position> freeCells = new TreeSet<>();
-    private final int boardSize;
 
-    public FreeCellsBoard(int boardSize) {
-        this.boardSize = boardSize;
-        for(int i = 0; i < boardSize; i++){
-            for (int j = 0; j < boardSize; j++){
-                freeCells.add(new Position(i,j));
+    public FreeCellsBoard(int width, int height) {
+        super(width,height);
+        for(int i = 0; i < height; i++){
+            for (int j= 0; j < width; j++){
+                freeCells.add(new Position(i,j, this));
             }
         }
     }

@@ -15,10 +15,6 @@ public class Rook extends LongDistanceFigure {
         super(position);
     }
 
-    public Rook(int x, int y) {
-        super(x, y);
-    }
-
     public void fillInBoard(int[][] board) {
         fillLines(board);
     }

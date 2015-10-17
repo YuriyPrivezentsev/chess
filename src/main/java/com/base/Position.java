@@ -11,10 +11,10 @@ public class Position implements Comparable<Position>{
     private final int column; //column
     private final int weightOnBoard;
 
-    public Position(int line, int column) {
+    public Position(int line, int column, Board board) {
         this.line = line;
         this.column = column;
-        weightOnBoard = line * getBoardSize() + column;
+        weightOnBoard = line * board.getHeight() + column;
     }
 
     public int getLine() {
@@ -27,11 +27,6 @@ public class Position implements Comparable<Position>{
 
     public int getWeightOnBoard(){
         return weightOnBoard;
-    }
-
-    private int getBoardSize() {
-        //TODO:2015-10-13:yuriy.privezentsev: replace the hardcode with proper size retrieval.
-        return 10;
     }
 
     @Override

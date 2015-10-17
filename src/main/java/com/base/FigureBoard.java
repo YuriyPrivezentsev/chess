@@ -13,8 +13,12 @@ import java.util.TreeMap;
  * @author Yuriy Privezentsev
  * @since 10/13/2015
  */
-public class FigureBoard {
+public class FigureBoard extends AbstractBoard{
     private SortedMap<Position, Figure> figures = new TreeMap<>();
+
+    public FigureBoard(int width, int height) {
+        super(width, height);
+    }
 
     public boolean hasFigure(Position underAttack){
         return figures.containsKey(underAttack);

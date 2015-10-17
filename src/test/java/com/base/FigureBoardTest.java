@@ -19,23 +19,25 @@ public class FigureBoardTest {
 
     @Before
     public void init(){
-        figureBoard = new FigureBoard();
-        figureBoard.addFigure(new Queen(1,1));
+        figureBoard = new FigureBoard(2,2);
+        Position queenPosition = new Position(1, 1, figureBoard);
+        figureBoard.addFigure(new Queen(queenPosition));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testRemoval() {
-        figureBoard.removeFigure(new Knight(1,1));
+        Position knightPosition = new Position(1, 1, figureBoard);
+        figureBoard.removeFigure(new Knight(knightPosition));
     }
 
     @Test
     public void testTakenField() {
-        assertTrue(figureBoard.hasFigure(new Position(1,1)));
+        assertTrue(figureBoard.hasFigure(new Position(1,1,figureBoard)));
     }
 
     @Test
     public void testFreeField() {
-        assertFalse(figureBoard.hasFigure(new Position(0,0)));
+        assertFalse(figureBoard.hasFigure(new Position(0,0, figureBoard)));
     }
 
 }

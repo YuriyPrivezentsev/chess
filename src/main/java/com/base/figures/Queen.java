@@ -15,10 +15,6 @@ public class Queen extends LongDistanceFigure {
         super(position);
     }
 
-    public Queen(int x, int y) {
-        super(x, y);
-    }
-
     public void fillInBoard(int[][] board) {
         fillDiagonals(board);
         fillLines(board);

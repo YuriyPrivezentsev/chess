@@ -16,10 +16,6 @@ public class Knight extends AbstractFigure {
         super(position);
     }
 
-    public Knight(int x, int y) {
-        super(x, y);
-    }
-
     public void fillInBoard(int[][] board) {
         board[getPosition().getLine()][getPosition().getColumn()] = BoardOperations.TAKEN;
         int counter = 0;
