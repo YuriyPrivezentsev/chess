@@ -2,6 +2,9 @@ package com.base.board;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -38,7 +41,22 @@ public class FreeCellsBoardTest {
         Position nextFreeCell = freeCellsBoard.getNextFreeCell(position);
         assertEquals(1, nextFreeCell.getLine());
         assertEquals(2, nextFreeCell.getColumn());
+    }
 
+    @Test
+    public void testFreeCellsCount() {
+        FreeCellsBoard freeCellsBoard = new FreeCellsBoard(3, 2);
+        assertEquals(6, freeCellsBoard.getFreeCellsCount());
+
+        freeCellsBoard.occupyCell(new Position(1, 1, freeCellsBoard));
+        assertEquals(5, freeCellsBoard.getFreeCellsCount());
+
+        Collection<Position> positions = new ArrayList<>(2);
+        positions.add(new Position(1,0,freeCellsBoard));
+        positions.add(new Position(1,1,freeCellsBoard));
+        positions.add(new Position(1,2,freeCellsBoard));
+        freeCellsBoard.occupyCells(positions);
+        assertEquals(3, freeCellsBoard.getFreeCellsCount());
     }
 
 }

@@ -27,18 +27,27 @@ public class Processor {
     }
 
     public void process() {
+        if(figures.isEmpty()
+                || figures.size() > width*height){
+            return;
+        }
+
         FreeCellsBoard freeCellsBoard = new FreeCellsBoard(width, height);
         FigureBoard figureBoard = new FigureBoard(width, height);
         placeFigure(freeCellsBoard, figureBoard, null);
     }
 
-    private void placeFigure(FreeCellsBoard freeCellsBoard, FigureBoard figureBoard, Figure previusProcessedFigure) {
+    private void placeFigure(FreeCellsBoard freeCellsBoard, FigureBoard figureBoard, Figure previousProcessedFigure) {
+        if(figures.size() > freeCellsBoard.getFreeCellsCount()) {
+            return;
+        }
+
         Position freeCell;
         Figure figure = figures.poll();
-        if (previusProcessedFigure == null || !figure.isSameType(previusProcessedFigure)) {
+        if (previousProcessedFigure == null || !figure.isSameType(previousProcessedFigure)) {
             freeCell = freeCellsBoard.getFirstFreeCell();
         } else {
-            freeCell = freeCellsBoard.getNextFreeCell(previusProcessedFigure.getPosition());
+            freeCell = freeCellsBoard.getNextFreeCell(previousProcessedFigure.getPosition());
         }
 
         while (freeCell != null) {
@@ -49,9 +58,14 @@ public class Processor {
                 if (figures.isEmpty()) {
                     processResult(figureBoard);
                 } else {
+                    freeCellsBoard.occupyCells(figureCoverage);
                     placeFigure(freeCellsBoard, figureBoard, figure);
                 }
                 figureBoard.removeFigure(figure);
+            }
+
+            if(previousProcessedFigure == null){
+                freeCellsBoard = new FreeCellsBoard(width,height);
             }
             freeCell = freeCellsBoard.getNextFreeCell(freeCell);
         }

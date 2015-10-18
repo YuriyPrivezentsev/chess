@@ -66,4 +66,8 @@ public class FreeCellsBoard extends AbstractBoard {
         }
         return boardRepresentation.toString();
     }
+
+    public int getFreeCellsCount() {
+        return freeCells.size();
+    }
 }

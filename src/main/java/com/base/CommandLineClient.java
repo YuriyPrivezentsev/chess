@@ -21,6 +21,7 @@ public class CommandLineClient {
         System.out.println(BOARD_PROMPT);
         System.out.print(">");
         Scanner scanner = new Scanner(System.in);
+        scanner.useDelimiter("\n");
         String input = scanner.next().replace(" ", "").toUpperCase();
         while (!input.equals("EXIT")) {
             if (pattern.matcher(input).matches()) {
