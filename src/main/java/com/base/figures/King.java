@@ -1,7 +1,7 @@
 package com.base.figures;
 
-import com.base.FigureBoard;
-import com.base.Position;
+import com.base.board.FigureBoard;
+import com.base.board.Position;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,7 +38,7 @@ public class King extends AbstractFigure {
 
         for (int line = yStart; line <= yFinish; line++) {
             for (int column = xStart; column <= xFinish; column++) {
-                if (!addCoverage(kingCoverage, resultBoard, line, column)){
+                if (!addCoverage(kingCoverage, resultBoard, line, column)) {
                     return EMPTY_RESULT;
                 }
 

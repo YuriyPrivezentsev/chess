@@ -1,7 +1,7 @@
 package com.base.figures;
 
-import com.base.FigureBoard;
-import com.base.Position;
+import com.base.board.FigureBoard;
+import com.base.board.Position;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -23,7 +23,7 @@ public class KnightTest extends FigureTest<Knight> {
 
     @Override
     protected Position getOverlappingPosition(FigureBoard figureBoard) {
-        return new Position(2,3,figureBoard);
+        return new Position(2, 3, figureBoard);
     }
 
     @Override

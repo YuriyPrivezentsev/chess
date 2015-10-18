@@ -1,6 +1,6 @@
 package com.base.figures;
 
-import com.base.Position;
+import com.base.board.Position;
 import org.junit.Test;
 
 /**
@@ -14,11 +14,11 @@ public class RookTest extends FigureTest<Rook> {
     public void testBoardFillCentral() {
         Position rookPosition = new Position(2, 2, baseBoard);
         Rook rook = new Rook(rookPosition);
-        int [][] checkBoard = { {0,0,1,0,0},
-                                {0,0,1,0,0},
-                                {1,1,1,1,1},
-                                {0,0,1,0,0},
-                                {0,0,1,0,0}};
+        int[][] checkBoard = {{0, 0, 1, 0, 0},
+                {0, 0, 1, 0, 0},
+                {1, 1, 1, 1, 1},
+                {0, 0, 1, 0, 0},
+                {0, 0, 1, 0, 0}};
         performTest(rook, checkBoard, 5, 5);
     }
 
@@ -26,11 +26,11 @@ public class RookTest extends FigureTest<Rook> {
     public void testBoardFillSide() {
         Position rookPosition = new Position(1, 0, baseBoard);
         Rook rook = new Rook(rookPosition);
-        int [][] checkBoard = { {1,0,0,0,0},
-                                {1,1,1,1,1},
-                                {1,0,0,0,0},
-                                {1,0,0,0,0},
-                                {1,0,0,0,0}};
+        int[][] checkBoard = {{1, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0}};
         performTest(rook, checkBoard, 5, 5);
     }
 
@@ -38,11 +38,11 @@ public class RookTest extends FigureTest<Rook> {
     public void testBoardFillCornerCase() {
         Position rookPosition = new Position(4, 4, baseBoard);
         Rook rook = new Rook(rookPosition);
-        int [][] checkBoard = { {0,0,0,0,1},
-                                {0,0,0,0,1},
-                                {0,0,0,0,1},
-                                {0,0,0,0,1},
-                                {1,1,1,1,1}};
+        int[][] checkBoard = {{0, 0, 0, 0, 1},
+                {0, 0, 0, 0, 1},
+                {0, 0, 0, 0, 1},
+                {0, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1}};
         performTest(rook, checkBoard, 5, 5);
     }
 

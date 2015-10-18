@@ -1,6 +1,6 @@
 package com.base.figures;
 
-import com.base.Processor;
+import com.base.ProcessorBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,15 +14,15 @@ import java.util.StringTokenizer;
  */
 public class FigureFactory {
 
-    public static Collection<Figure> createSetOfFigures(String input){
-        StringTokenizer tokenizer = new StringTokenizer(input, Processor.MULTIPLIER_DELIMITER);
+    public Collection<Figure> createSetOfFigures(String input) {
+        StringTokenizer tokenizer = new StringTokenizer(input, ProcessorBuilder.MULTIPLIER_DELIMITER);
         String figure;
         int quantity;
 
-        if(startsWithNumber(input)){
+        if (startsWithNumber(input)) {
             quantity = getQuantity(tokenizer);
             figure = tokenizer.nextToken();
-        } else if (endsWithNumber(input)){
+        } else if (endsWithNumber(input)) {
             figure = tokenizer.nextToken();
             quantity = getQuantity(tokenizer);
         } else {
@@ -30,12 +30,12 @@ public class FigureFactory {
                     + ". Must be either <figure notation>x<quantity> or <quantity>x<figure notation>");
         }
 
-        if(tokenizer.hasMoreTokens()){
+        if (tokenizer.hasMoreTokens()) {
             throw new IllegalArgumentException("Unrecognized figure set format: " + input);
         }
 
         Collection<Figure> result = new ArrayList<>(quantity);
-        while(quantity > 0){
+        while (quantity > 0) {
             result.add(getFigure(figure));
             quantity--;
         }
@@ -43,26 +43,26 @@ public class FigureFactory {
         return result;
     }
 
-    private static int getQuantity(StringTokenizer tokenizer) {
+    private int getQuantity(StringTokenizer tokenizer) {
         int result = Integer.parseInt(tokenizer.nextToken());
-        if(result <= 0){
+        if (result <= 0) {
             throw new IllegalArgumentException("Figure quantity cannot be of a non-positive value: " + result);
         }
         return result;
     }
 
-    private static boolean startsWithNumber(String input){
+    private boolean startsWithNumber(String input) {
         byte start = (byte) input.charAt(0);
         return start > 47 && start < 58;
     }
 
-    private static boolean endsWithNumber(String input){
+    private boolean endsWithNumber(String input) {
         byte start = (byte) input.charAt(input.length() - 1);
         return start > 47 && start < 58;
     }
 
-    public static Figure getFigure(String name) {
-        switch (name){
+    public Figure getFigure(String name) {
+        switch (name) {
             case King.NAME:
                 return new King();
             case Queen.NAME:

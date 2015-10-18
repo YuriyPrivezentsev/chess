@@ -1,7 +1,7 @@
 package com.base.figures;
 
-import com.base.FigureBoard;
-import com.base.Position;
+import com.base.board.FigureBoard;
+import com.base.board.Position;
 
 import java.util.Collection;
 
@@ -25,12 +25,12 @@ public class Queen extends LongDistanceFigure {
 
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {
         Collection<Position> queenCoverage = fillLines(resultBoard);
-        if(queenCoverage.isEmpty()){
+        if (queenCoverage.isEmpty()) {
             return EMPTY_RESULT;
         }
 
         Collection<Position> diagonalCoverage = fillDiagonals(resultBoard);
-        if(diagonalCoverage.isEmpty()){
+        if (diagonalCoverage.isEmpty()) {
             return EMPTY_RESULT;
         }
 

@@ -1,6 +1,6 @@
 package com.base.figures;
 
-import com.base.Position;
+import com.base.board.Position;
 import org.junit.Test;
 
 /**
@@ -14,11 +14,11 @@ public class KingTest extends FigureTest<King> {
     public void testBoardFillCentral() {
         Position kingPosition = new Position(2, 2, baseBoard);
         King king = new King(kingPosition);
-        int [][] checkBoard = { {0,0,0,0,0},
-                                {0,1,1,1,0},
-                                {0,1,1,1,0},
-                                {0,1,1,1,0},
-                                {0,0,0,0,0}};
+        int[][] checkBoard = {{0, 0, 0, 0, 0},
+                {0, 1, 1, 1, 0},
+                {0, 1, 1, 1, 0},
+                {0, 1, 1, 1, 0},
+                {0, 0, 0, 0, 0}};
         performTest(king, checkBoard, 5, 5);
     }
 
@@ -26,11 +26,11 @@ public class KingTest extends FigureTest<King> {
     public void testBoardFillSide() {
         Position kingPosition = new Position(1, 0, baseBoard);
         King king = new King(kingPosition);
-        int [][] checkBoard = { {1,1,0,0,0},
-                                {1,1,0,0,0},
-                                {1,1,0,0,0},
-                                {0,0,0,0,0},
-                                {0,0,0,0,0}};
+        int[][] checkBoard = {{1, 1, 0, 0, 0},
+                {1, 1, 0, 0, 0},
+                {1, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0}};
         performTest(king, checkBoard, 5, 5);
     }
 
@@ -38,11 +38,11 @@ public class KingTest extends FigureTest<King> {
     public void testBoardFillCornerCase() {
         Position kingPosition = new Position(4, 4, baseBoard);
         King king = new King(kingPosition);
-        int [][] checkBoard = { {0,0,0,0,0},
-                                {0,0,0,0,0},
-                                {0,0,0,0,0},
-                                {0,0,0,1,1},
-                                {0,0,0,1,1}};
+        int[][] checkBoard = {{0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1},
+                {0, 0, 0, 1, 1}};
         performTest(king, checkBoard, 5, 5);
     }
 

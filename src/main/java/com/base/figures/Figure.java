@@ -1,7 +1,7 @@
 package com.base.figures;
 
-import com.base.FigureBoard;
-import com.base.Position;
+import com.base.board.FigureBoard;
+import com.base.board.Position;
 
 import java.util.Collection;
 
@@ -11,7 +11,7 @@ import java.util.Collection;
  * @author Yuriy Privezentsev
  * @since 10/12/2015
  */
-public interface Figure extends Comparable<Figure>{
+public interface Figure extends Comparable<Figure> {
     /**
      * Try to position figure on board making sure it neither can be taken nor can take other figures on board.
      *
@@ -39,4 +39,9 @@ public interface Figure extends Comparable<Figure>{
      * Gets the letter mark for the figure
      */
     String getName();
+
+    /**
+     * Test whether the current figure is of the same class as the other one.
+     */
+    boolean isSameType(Figure other);
 }

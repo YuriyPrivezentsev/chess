@@ -1,12 +1,12 @@
-package com.base;
-
-import static org.junit.Assert.assertTrue;
+package com.base.board;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -20,10 +20,11 @@ public class PositionTest {
     private Board board;
 
     @Before
-    public void init(){
+    public void init() {
         MockitoAnnotations.initMocks(this);
         Mockito.when(board.getWidth()).thenReturn(5);
     }
+
     @Test
     public void testCompareLess() {
         Position position = new Position(1, 1, board);

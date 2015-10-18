@@ -1,4 +1,4 @@
-package com.base;
+package com.base.board;
 
 /**
  * The base board implementation with the common functional of retrieving common board characteristics, like dimensions.

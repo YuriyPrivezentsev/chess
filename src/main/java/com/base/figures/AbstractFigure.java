@@ -1,7 +1,7 @@
 package com.base.figures;
 
-import com.base.FigureBoard;
-import com.base.Position;
+import com.base.board.FigureBoard;
+import com.base.board.Position;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -46,5 +46,13 @@ public abstract class AbstractFigure implements Figure {
     @Override
     public int compareTo(Figure other) {
         return getPriority() - other.getPriority();
+    }
+
+    @SuppressWarnings("StringEquality")
+    @Override
+    public boolean isSameType(Figure other) {
+        /*Here is a little hack in speed: since we know that getName returns constant and constants are inlined
+        * we can allow ourself a bit of non-strict behavior*/
+        return other != null && getName() == other.getName();
     }
 }

@@ -1,7 +1,7 @@
 package com.base.figures;
 
-import com.base.FigureBoard;
-import com.base.Position;
+import com.base.board.FigureBoard;
+import com.base.board.Position;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,7 +40,7 @@ public class Knight extends AbstractFigure {
                 if (line >= 0 && line != getPosition().getLine()
                         && column > 0 && column != getPosition().getColumn()
                         && counter % 2 == 1) {
-                    if (!addCoverage(knightCoverage, resultBoard, line, column)){
+                    if (!addCoverage(knightCoverage, resultBoard, line, column)) {
                         return EMPTY_RESULT;
                     }
                 }

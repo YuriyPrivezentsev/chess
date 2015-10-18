@@ -1,4 +1,4 @@
-package com.base;
+package com.base.board;
 
 /**
  * Represents the game board.
@@ -10,5 +10,6 @@ public interface Board {
     String FREE_POSITION_MARKER = "-";
 
     int getWidth();
+
     int getHeight();
 }

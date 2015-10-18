@@ -1,10 +1,9 @@
 package com.base.figures;
 
-import com.base.FigureBoard;
-import com.base.Position;
+import com.base.board.FigureBoard;
+import com.base.board.Position;
 
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * Bishop functionality implementation.

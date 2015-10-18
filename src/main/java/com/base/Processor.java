@@ -1,11 +1,12 @@
 package com.base;
 
+import com.base.board.FigureBoard;
+import com.base.board.FreeCellsBoard;
+import com.base.board.Position;
 import com.base.figures.Figure;
-import com.base.figures.FigureFactory;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.Collection;
+import java.util.Deque;
 
 /**
  * The main logic class
@@ -15,36 +16,49 @@ import java.util.StringTokenizer;
  */
 public class Processor {
 
-    public static final String PARAMETER_DELIMITER = ",";
-    public static final String MULTIPLIER_DELIMITER = "x";
+    private final int width;
+    private final int height;
+    private final Deque<Figure> figures;
 
-    public Processor(String input) {
-        input = input.replace(" ","");
-        StringTokenizer tokenizer = new StringTokenizer(input, PARAMETER_DELIMITER);
-
-        String size = tokenizer.nextToken();
-        StringTokenizer sizeTokenizer = new StringTokenizer(size, MULTIPLIER_DELIMITER);
-        int width = getInteger(sizeTokenizer);
-        int height = getInteger(sizeTokenizer);
-
-        Queue<Figure> figures = getFigures(tokenizer);
+    public Processor(int width, int height, Deque<Figure> figures) {
+        this.width = width;
+        this.height = height;
+        this.figures = figures;
     }
 
-    private Queue<Figure> getFigures(StringTokenizer tokenizer) {
-        Queue<Figure> result = new PriorityQueue<>();
-        while (tokenizer.hasMoreTokens()){
-            result.addAll(FigureFactory.createSetOfFigures(tokenizer.nextToken()));
+    public void process() {
+        FreeCellsBoard freeCellsBoard = new FreeCellsBoard(width, height);
+        FigureBoard figureBoard = new FigureBoard(width, height);
+        placeFigure(freeCellsBoard, figureBoard, null);
+    }
+
+    private void placeFigure(FreeCellsBoard freeCellsBoard, FigureBoard figureBoard, Figure previusProcessedFigure) {
+        Position freeCell;
+        Figure figure = figures.poll();
+        if (previusProcessedFigure == null || !figure.isSameType(previusProcessedFigure)) {
+            freeCell = freeCellsBoard.getFirstFreeCell();
+        } else {
+            freeCell = freeCellsBoard.getNextFreeCell(previusProcessedFigure.getPosition());
         }
-        return null;
-    }
 
-    private int getInteger(StringTokenizer tokenizer) {
-        int result = Integer.parseInt(tokenizer.nextToken());
-        if(result <= 0){
-            throw new IllegalArgumentException("Board size cannot be of a non-positive value: " + result);
+        while (freeCell != null) {
+            figure.setPosition(freeCell);
+            Collection<Position> figureCoverage = figure.placeOnBoard(figureBoard);
+            if (!figureCoverage.isEmpty()) {
+                figureBoard.addFigure(figure);
+                if (figures.isEmpty()) {
+                    processResult(figureBoard);
+                } else {
+                    placeFigure(freeCellsBoard, figureBoard, figure);
+                }
+                figureBoard.removeFigure(figure);
+            }
+            freeCell = freeCellsBoard.getNextFreeCell(freeCell);
         }
-        return result;
+        figures.push(figure);
     }
 
-
+    private void processResult(FigureBoard figureBoard) {
+        System.out.println(figureBoard.toString());
+    }
 }

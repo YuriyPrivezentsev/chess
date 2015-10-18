@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for @link{FigureFactory}
@@ -14,44 +13,46 @@ import static org.junit.Assert.assertTrue;
  * @since 10/18/2015
  */
 public class FigureFactoryTest {
+    private FigureFactory figureFactory = new FigureFactory();
+
     @Test
     public void testGetQueen() {
-        Figure figure = FigureFactory.getFigure("Q");
+        Figure figure = figureFactory.getFigure("Q");
         assertEquals(Queen.class, figure.getClass());
     }
 
     @Test
     public void testGetKing() {
-        Figure figure = FigureFactory.getFigure("K");
+        Figure figure = figureFactory.getFigure("K");
         assertEquals(King.class, figure.getClass());
     }
 
     @Test
     public void testGetKnight() {
-        Figure figure = FigureFactory.getFigure("N");
+        Figure figure = figureFactory.getFigure("N");
         assertEquals(Knight.class, figure.getClass());
     }
 
     @Test
     public void testGetBishop() {
-        Figure figure = FigureFactory.getFigure("B");
+        Figure figure = figureFactory.getFigure("B");
         assertEquals(Bishop.class, figure.getClass());
     }
 
     @Test
     public void testGetRook() {
-        Figure figure = FigureFactory.getFigure("R");
+        Figure figure = figureFactory.getFigure("R");
         assertEquals(Rook.class, figure.getClass());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetWrongFigure() {
-        FigureFactory.getFigure("Test");
+        figureFactory.getFigure("Test");
     }
 
     @Test
     public void testGetTwoQeens() {
-        Collection<Figure> setOfFigures = FigureFactory.createSetOfFigures("2xQ");
+        Collection<Figure> setOfFigures = figureFactory.createSetOfFigures("2XQ");
         assertEquals(2, setOfFigures.size());
         for (Figure figure : setOfFigures) {
             assertEquals(Queen.class, figure.getClass());
@@ -60,8 +61,8 @@ public class FigureFactoryTest {
 
     @Test
     public void testGetKnightThreeTimes() {
-        Collection<Figure> setOfFigures = FigureFactory.createSetOfFigures("Nx3");
-        assertEquals(3,setOfFigures.size());
+        Collection<Figure> setOfFigures = figureFactory.createSetOfFigures("NX3");
+        assertEquals(3, setOfFigures.size());
         for (Figure figure : setOfFigures) {
             assertEquals(Knight.class, figure.getClass());
         }
@@ -69,16 +70,16 @@ public class FigureFactoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testWrongNumberOfFigures() {
-        FigureFactory.createSetOfFigures("-1xQ");
+        figureFactory.createSetOfFigures("-1XQ");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNegativeNumberOfFigures() {
-        FigureFactory.createSetOfFigures("Qx-1");
+        figureFactory.createSetOfFigures("QX-1");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testUnrecognizedFormat() {
-        FigureFactory.createSetOfFigures("Qx1x1");
+        figureFactory.createSetOfFigures("QX1X1");
     }
 }

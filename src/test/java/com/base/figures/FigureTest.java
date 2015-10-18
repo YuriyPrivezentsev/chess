@@ -1,9 +1,9 @@
 package com.base.figures;
 
-import com.base.Board;
-import com.base.FigureBoard;
-import com.base.FreeCellsBoard;
-import com.base.Position;
+import com.base.board.Board;
+import com.base.board.FigureBoard;
+import com.base.board.FreeCellsBoard;
+import com.base.board.Position;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
  * @author Yuriy Privezentsev
  * @since 10/12/2015
  */
-public abstract class FigureTest <T extends Figure> {
+public abstract class FigureTest<T extends Figure> {
     private static final Logger LOG = LoggerFactory.getLogger(FigureTest.class);
     @Mock
     protected Board baseBoard;
@@ -52,6 +52,13 @@ public abstract class FigureTest <T extends Figure> {
                 }
             }
         }
+    }
+
+    @Test
+    public void testSameType() {
+        T figureOne = getNewFigure(null);
+        T figureTwo = getNewFigure(null);
+        assertTrue(figureOne.isSameType(figureTwo));
     }
 
     @Test
