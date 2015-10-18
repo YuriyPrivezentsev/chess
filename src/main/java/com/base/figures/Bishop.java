@@ -12,11 +12,20 @@ import java.util.Collections;
  * @author Yuriy Privezentsev
  * @since 10/12/2015
  */
-public class Bishop  extends LongDistanceFigure {
-    private static final String NAME = "B";
+public class Bishop extends LongDistanceFigure {
+    public static final String NAME = "B";
+    private static final int PRIORITY = 2;
 
     public Bishop(Position position) {
         super(position);
+    }
+
+    public Bishop() {
+
+    }
+
+    public int getPriority() {
+        return PRIORITY;
     }
 
     @Override

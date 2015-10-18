@@ -21,6 +21,10 @@ public abstract class LongDistanceFigure  extends AbstractFigure {
         super(position);
     }
 
+    public LongDistanceFigure() {
+
+    }
+
     protected Collection<Position> fillLines(FigureBoard resultBoard) {
         int height = resultBoard.getHeight();
         int width = resultBoard.getWidth();

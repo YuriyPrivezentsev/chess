@@ -12,10 +12,15 @@ import java.util.Collection;
  * @since 10/12/2015
  */
 public class Queen extends LongDistanceFigure {
-    private static final String NAME = "Q";
+    public static final String NAME = "Q";
+    private static final int PRIORITY = 3;
 
     public Queen(Position position) {
         super(position);
+    }
+
+    public Queen() {
+        super();
     }
 
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {
@@ -31,6 +36,10 @@ public class Queen extends LongDistanceFigure {
 
         queenCoverage.addAll(diagonalCoverage);
         return queenCoverage;
+    }
+
+    public int getPriority() {
+        return PRIORITY;
     }
 
     @Override

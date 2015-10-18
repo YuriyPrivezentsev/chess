@@ -13,11 +13,16 @@ import java.util.Collection;
  * @since 10/12/2015
  */
 public class King extends AbstractFigure {
-    private static final String NAME = "K";
+    public static final String NAME = "K";
     public static final int KING_COVERAGE_CAPACITY = 9;
+    private static final int PRIORITY = 5;
 
     public King(Position position) {
         super(position);
+    }
+
+    public King() {
+        super();
     }
 
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {
@@ -40,6 +45,10 @@ public class King extends AbstractFigure {
             }
         }
         return kingCoverage;
+    }
+
+    public int getPriority() {
+        return PRIORITY;
     }
 
     @Override

@@ -31,9 +31,6 @@ public class Position implements Comparable<Position>{
 
     @Override
     public int compareTo(Position other) {
-        if(other == null ){
-            throw new NullPointerException("Position cannot be null");
-        }
         return getWeightOnBoard() - other.getWeightOnBoard();
     }
 }

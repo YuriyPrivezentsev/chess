@@ -12,10 +12,19 @@ import java.util.Collection;
  * @since 10/12/2015
  */
 public class Rook extends LongDistanceFigure {
-    private static final String NAME = "R";
+    public static final String NAME = "R";
+    private static final int PRIORITY = 1;
 
     public Rook(Position position) {
         super(position);
+    }
+
+    public Rook() {
+
+    }
+
+    public int getPriority() {
+        return PRIORITY;
     }
 
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {

@@ -11,7 +11,7 @@ import java.util.Collection;
  * @author Yuriy Privezentsev
  * @since 10/12/2015
  */
-public interface Figure {
+public interface Figure extends Comparable<Figure>{
     /**
      * Try to position figure on board making sure it neither can be taken nor can take other figures on board.
      *
@@ -24,6 +24,16 @@ public interface Figure {
      * Current figure position.
      */
     Position getPosition();
+
+    /**
+     * Set current figure position on board
+     */
+    void setPosition(Position position);
+
+    /**
+     * Get the priority in which to process the figures
+     */
+    int getPriority();
 
     /**
      * Gets the letter mark for the figure

@@ -13,7 +13,7 @@ import java.util.Collections;
  * @since 10/12/2015
  */
 public abstract class AbstractFigure implements Figure {
-    private final Position position;
+    private Position position;
 
     @SuppressWarnings("unchecked")
     protected static final Collection<Position> EMPTY_RESULT = Collections.EMPTY_LIST;
@@ -22,8 +22,16 @@ public abstract class AbstractFigure implements Figure {
         this.position = position;
     }
 
+    public AbstractFigure() {
+
+    }
+
     public Position getPosition() {
         return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     protected boolean addCoverage(Collection<Position> coverage, FigureBoard resultBoard, int line, int column) {
@@ -35,4 +43,8 @@ public abstract class AbstractFigure implements Figure {
         return true;
     }
 
+    @Override
+    public int compareTo(Figure other) {
+        return getPriority() - other.getPriority();
+    }
 }
