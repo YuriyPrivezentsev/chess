@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -53,10 +54,31 @@ public class FreeCellsBoardTest {
 
         Collection<Position> positions = new ArrayList<>(2);
         positions.add(new Position(1,0,freeCellsBoard));
-        positions.add(new Position(1,1,freeCellsBoard));
-        positions.add(new Position(1,2,freeCellsBoard));
+        positions.add(new Position(1, 1, freeCellsBoard));
+        positions.add(new Position(1, 2, freeCellsBoard));
         freeCellsBoard.occupyCells(positions);
         assertEquals(3, freeCellsBoard.getFreeCellsCount());
+    }
+
+    @Test
+    public void testOccupyCells() {
+        FreeCellsBoard freeCellsBoard = new FreeCellsBoard(3, 3);
+
+        Collection<Position> positions = new ArrayList<>(2);
+        positions.add(new Position(1,0,freeCellsBoard));
+        positions.add(new Position(1, 1, freeCellsBoard));
+        positions.add(new Position(1, 2, freeCellsBoard));
+        Collection<Position> realCoverage = freeCellsBoard.occupyCells(positions);
+
+        assertEquals(3, realCoverage.size());
+
+        positions.clear();
+        positions.add(new Position(1, 1, freeCellsBoard));
+        positions.add(new Position(2, 1, freeCellsBoard));
+        List<Position> realCoverageList = (List<Position>) freeCellsBoard.occupyCells(positions);
+        assertEquals(1, realCoverageList.size());
+        assertEquals(2,realCoverageList.get(0).getLine());
+        assertEquals(1,realCoverageList.get(0).getColumn());
     }
 
 }

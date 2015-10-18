@@ -1,9 +1,8 @@
 package com.base.board;
 
-import java.util.Collection;
-import java.util.NavigableSet;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import com.base.figures.Figure;
+
+import java.util.*;
 
 /**
  * Contains the list of all free (not taken and not under attack) cells.
@@ -29,12 +28,22 @@ public class FreeCellsBoard extends AbstractBoard {
         }
     }
 
-    public void occupyCells(Collection<Position> figureCoverage) {
-        freeCells.removeAll(figureCoverage);
+    public Collection<Position> occupyCells(Collection<Position> figureCoverage) {
+        Collection<Position> realCoverage = new ArrayList<>(figureCoverage.size());
+        for (Position position : figureCoverage) {
+            if(freeCells.remove(position)){
+                realCoverage.add(position);
+            }
+        }
+        return realCoverage;
     }
 
     public void occupyCell(Position occupied) {
         freeCells.remove(occupied);
+    }
+
+    public void freeCells(Collection<Position> figureCoverage){
+        freeCells.addAll(figureCoverage);
     }
 
     public Position getFirstFreeCell() {

@@ -6,6 +6,7 @@ import com.base.board.Position;
 import com.base.figures.Figure;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
 
 /**
@@ -19,6 +20,7 @@ public class Processor {
     private final int width;
     private final int height;
     private final Deque<Figure> figures;
+    private int resultCount = 0;
 
     public Processor(int width, int height, Deque<Figure> figures) {
         this.width = width;
@@ -27,6 +29,8 @@ public class Processor {
     }
 
     public void process() {
+        long startTime = System.currentTimeMillis();
+        resultCount = 0;
         if(figures.isEmpty()
                 || figures.size() > width*height){
             return;
@@ -35,6 +39,15 @@ public class Processor {
         FreeCellsBoard freeCellsBoard = new FreeCellsBoard(width, height);
         FigureBoard figureBoard = new FigureBoard(width, height);
         placeFigure(freeCellsBoard, figureBoard, null);
+
+        long time = System.currentTimeMillis() - startTime;
+        addSummary(time);
+    }
+
+    private void addSummary(long time) {
+        System.out.println("\r\n");
+        System.out.println("resultCount = " + resultCount);
+        System.out.println("time = " + time);
     }
 
     private void placeFigure(FreeCellsBoard freeCellsBoard, FigureBoard figureBoard, Figure previousProcessedFigure) {
@@ -44,7 +57,8 @@ public class Processor {
 
         Position freeCell;
         Figure figure = figures.poll();
-        if (previousProcessedFigure == null || !figure.isSameType(previousProcessedFigure)) {
+        if (previousProcessedFigure == null
+                || !figure.isSameType(previousProcessedFigure)) {
             freeCell = freeCellsBoard.getFirstFreeCell();
         } else {
             freeCell = freeCellsBoard.getNextFreeCell(previousProcessedFigure.getPosition());
@@ -55,17 +69,15 @@ public class Processor {
             Collection<Position> figureCoverage = figure.placeOnBoard(figureBoard);
             if (!figureCoverage.isEmpty()) {
                 figureBoard.addFigure(figure);
+                Collection<Position> nonOverlappedCoverage = Collections.EMPTY_LIST;
                 if (figures.isEmpty()) {
                     processResult(figureBoard);
                 } else {
-                    freeCellsBoard.occupyCells(figureCoverage);
+                    nonOverlappedCoverage = freeCellsBoard.occupyCells(figureCoverage);
                     placeFigure(freeCellsBoard, figureBoard, figure);
                 }
                 figureBoard.removeFigure(figure);
-            }
-
-            if(previousProcessedFigure == null){
-                freeCellsBoard = new FreeCellsBoard(width,height);
+                freeCellsBoard.freeCells(nonOverlappedCoverage);
             }
             freeCell = freeCellsBoard.getNextFreeCell(freeCell);
         }
@@ -74,5 +86,6 @@ public class Processor {
 
     private void processResult(FigureBoard figureBoard) {
         System.out.println(figureBoard.toString());
+        resultCount++;
     }
 }

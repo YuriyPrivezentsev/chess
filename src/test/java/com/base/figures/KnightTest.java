@@ -32,6 +32,34 @@ public class KnightTest extends FigureTest<Knight> {
     }
 
     @Test
+    public void testUpperBound() {
+        FigureBoard figureBoard = new FigureBoard(4, 4);
+        Position knightPosition = new Position(0, 2, figureBoard);
+        Knight knight = new Knight(knightPosition);
+        int[][] checkBoard ={
+                {0,0,1,0},
+                {1,0,0,0},
+                {0,1,0,1},
+                {0,0,0,0}
+        };
+        performTest(knight, checkBoard, 4, 4);
+    }
+
+    @Test
+    public void testRightBound() {
+        FigureBoard figureBoard = new FigureBoard(4, 4);
+        Position knightPosition = new Position(1, 3, figureBoard);
+        Knight knight = new Knight(knightPosition);
+        int[][] checkBoard ={
+                {0,1,0,0},
+                {0,0,0,1},
+                {0,1,0,0},
+                {0,0,1,0}
+        };
+        performTest(knight, checkBoard, 4, 4);
+    }
+
+    @Test
     public void testBoardFillCentral() {
         Position knightPosition = new Position(3, 3, baseBoard);
         Knight knight = new Knight(knightPosition);

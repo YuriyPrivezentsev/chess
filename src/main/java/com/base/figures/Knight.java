@@ -31,14 +31,13 @@ public class Knight extends AbstractFigure {
 
         int counter = 0;
         int yStart = getPosition().getLine() - 2;
-        int yFinish = Math.min(resultBoard.getHeight(), getPosition().getLine() + 3);
+        int yFinish =  getPosition().getLine() + 3;
         int xStart = getPosition().getColumn() - 2;
-        int xFinish = Math.min(resultBoard.getWidth(), getPosition().getColumn() + 3);
-
+        int xFinish = getPosition().getColumn() + 3;
         for (int line = yStart; line < yFinish; line++) {
             for (int column = xStart; column < xFinish; column++) {
-                if (line >= 0 && line != getPosition().getLine()
-                        && column > 0 && column != getPosition().getColumn()
+                if (line >= 0 && line != getPosition().getLine() && line < resultBoard.getHeight()
+                        && column >= 0 && column != getPosition().getColumn() && column < resultBoard.getWidth()
                         && counter % 2 == 1) {
                     if (!addCoverage(knightCoverage, resultBoard, line, column)) {
                         return EMPTY_RESULT;
