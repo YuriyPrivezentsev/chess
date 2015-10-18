@@ -23,14 +23,25 @@ public class Rook extends LongDistanceFigure {
 
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public int getPriority() {
         return PRIORITY;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {
         return fillLines(resultBoard);
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public String getName() {
         return NAME;

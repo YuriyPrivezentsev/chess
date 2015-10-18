@@ -31,7 +31,9 @@ public interface Figure extends Comparable<Figure> {
     void setPosition(Position position);
 
     /**
-     * Get the priority in which to process the figures
+     * Get the priority in which to process the figures.
+     * The priorities are chosen based on the combination of
+     * complexity of figure processing and number of cells occupied on board.
      */
     int getPriority();
 

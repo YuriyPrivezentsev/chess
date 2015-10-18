@@ -28,6 +28,9 @@ public class Processor {
         this.figures = figures;
     }
 
+    /**
+     * Calculate solutions.
+     */
     public void process() {
         long startTime = System.currentTimeMillis();
         resultCount = 0;

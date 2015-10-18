@@ -23,6 +23,10 @@ public class Queen extends LongDistanceFigure {
         super();
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {
         Collection<Position> queenCoverage = fillLines(resultBoard);
         if (queenCoverage.isEmpty()) {
@@ -38,10 +42,17 @@ public class Queen extends LongDistanceFigure {
         return queenCoverage;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public int getPriority() {
         return PRIORITY;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public String getName() {
         return NAME;

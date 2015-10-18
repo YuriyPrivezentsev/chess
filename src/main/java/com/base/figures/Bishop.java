@@ -23,15 +23,26 @@ public class Bishop extends LongDistanceFigure {
 
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public int getPriority() {
         return PRIORITY;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public String getName() {
         return NAME;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {
         return fillDiagonals(resultBoard);
     }

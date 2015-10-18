@@ -20,6 +20,12 @@ public class ProcessorBuilder {
 
     private final FigureFactory figureFactory = new FigureFactory();
 
+    /**
+     * Parse input string to processor parameters and create processor.
+     * @param input - processor parameters string in form
+     *              board_widthXboard_height,figure_nameXcount.
+     *              For example 3X3,NX2,RX1 stands for problem of 3?3 board containing 2 Kings and 1 Rook.
+     */
     public Processor fromString(String input) {
         input = input.replace(" ", "");
         StringTokenizer tokenizer = new StringTokenizer(input, PARAMETER_DELIMITER);
@@ -34,6 +40,12 @@ public class ProcessorBuilder {
         return new Processor(width, height, figures);
     }
 
+    /**
+     * Construct prioritized list of figures for the problem.
+     *
+     * @param tokenizer - tokens with figure types and quantities
+     * @return - prioritized list of figures
+     */
     public Deque<Figure> getFigures(StringTokenizer tokenizer) {
         LinkedList<Figure> result = new LinkedList<>();
         while (tokenizer.hasMoreTokens()) {

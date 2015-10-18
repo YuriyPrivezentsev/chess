@@ -28,6 +28,11 @@ public class FreeCellsBoard extends AbstractBoard {
         }
     }
 
+    /**
+     * Mark cells as taken when they are under attack or occupied by some figure.
+     * @param figureCoverage - all cells which must be marked
+     * @return - cells which indeed have been marked
+     */
     public Collection<Position> occupyCells(Collection<Position> figureCoverage) {
         Collection<Position> realCoverage = new ArrayList<>(figureCoverage.size());
         for (Position position : figureCoverage) {
@@ -38,28 +43,43 @@ public class FreeCellsBoard extends AbstractBoard {
         return realCoverage;
     }
 
+    /**
+     * Mark one specific cell as taken when they are under attack or occupied by some figure.
+     */
     public void occupyCell(Position occupied) {
         freeCells.remove(occupied);
     }
 
+    /**
+     * Unmark cells as under attack or occupied.
+     * @param figureCoverage - cells to be unmarked
+     */
     public void freeCells(Collection<Position> figureCoverage){
         freeCells.addAll(figureCoverage);
     }
 
+    /**
+     * Retrieve first cell on board not marked as occupied.
+     * @return - first free cell or null if none.
+     */
     public Position getFirstFreeCell() {
         return freeCells.first();
     }
 
+    /**
+     * Retrieve first cell after given not marked as occupied.
+     * @param position - cell to start with.
+     * @return - first free cell after given or null if none.
+     */
     public Position getNextFreeCell(Position position) {
         return freeCells.higher(position);
     }
 
+    /**
+     * Test whether cell is marked as under attack or occupied
+     */
     public boolean isCellFree(Position position) {
         return freeCells.contains(position);
-    }
-
-    public FreeCellsBoard deepCopy() {
-        return new FreeCellsBoard(getWidth(), getHeight(), freeCells);
     }
 
     @Override
@@ -76,6 +96,9 @@ public class FreeCellsBoard extends AbstractBoard {
         return boardRepresentation.toString();
     }
 
+    /**
+     * Get count of cells neither marked as under attack nor occupied
+     */
     public int getFreeCellsCount() {
         return freeCells.size();
     }

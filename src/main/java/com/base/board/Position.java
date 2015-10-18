@@ -25,6 +25,9 @@ public class Position implements Comparable<Position> {
         return column;
     }
 
+    /**
+     * Gets order number of this cell on board.
+     */
     public int getWeightOnBoard() {
         return weightOnBoard;
     }

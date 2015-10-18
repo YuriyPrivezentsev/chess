@@ -25,6 +25,10 @@ public class King extends AbstractFigure {
         super();
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {
         Collection<Position> kingCoverage = new ArrayList<>(KING_COVERAGE_CAPACITY);
         int yStart = getPosition().getLine() != 0 ? getPosition().getLine() - 1 : 0;
@@ -47,10 +51,17 @@ public class King extends AbstractFigure {
         return kingCoverage;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public int getPriority() {
         return PRIORITY;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public String getName() {
         return NAME;

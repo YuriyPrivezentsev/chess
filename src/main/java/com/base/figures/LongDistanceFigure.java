@@ -22,6 +22,12 @@ public abstract class LongDistanceFigure extends AbstractFigure {
 
     }
 
+    /**
+     * Calculate coverage for strait lines figures, like Queen and Rook.
+     *
+     * @param resultBoard - the board with figures placed
+     * @return - The collection of positions which can be attacked by the figure, including its own place
+     */
     protected Collection<Position> fillLines(FigureBoard resultBoard) {
         int height = resultBoard.getHeight();
         int width = resultBoard.getWidth();
@@ -42,6 +48,12 @@ public abstract class LongDistanceFigure extends AbstractFigure {
         return lineCoverage;
     }
 
+    /**
+     * Calculate coverage for diagonal lines figures, like Queen and Bishop.
+     *
+     * @param resultBoard - the board with figures placed
+     * @return - The collection of positions which can be attacked by the figure, including its own place
+     */
     protected Collection<Position> fillDiagonals(FigureBoard resultBoard) {
 
         int height = resultBoard.getHeight();

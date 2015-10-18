@@ -25,6 +25,10 @@ public class Knight extends AbstractFigure {
 
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {
         Collection<Position> knightCoverage = new ArrayList<>(KNIGHT_COVERAGE_CAPACITY);
         knightCoverage.add(getPosition());
@@ -49,10 +53,17 @@ public class Knight extends AbstractFigure {
         return knightCoverage;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public int getPriority() {
         return PRIORITY;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public String getName() {
         return NAME;

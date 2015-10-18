@@ -14,7 +14,8 @@ public class KingTest extends FigureTest<King> {
     public void testBoardFillCentral() {
         Position kingPosition = new Position(2, 2, baseBoard);
         King king = new King(kingPosition);
-        int[][] checkBoard = {{0, 0, 0, 0, 0},
+        int[][] checkBoard = {
+                {0, 0, 0, 0, 0},
                 {0, 1, 1, 1, 0},
                 {0, 1, 1, 1, 0},
                 {0, 1, 1, 1, 0},
@@ -26,9 +27,36 @@ public class KingTest extends FigureTest<King> {
     public void testBoardFillSide() {
         Position kingPosition = new Position(1, 0, baseBoard);
         King king = new King(kingPosition);
-        int[][] checkBoard = {{1, 1, 0, 0, 0},
+        int[][] checkBoard = {
                 {1, 1, 0, 0, 0},
                 {1, 1, 0, 0, 0},
+                {1, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0}};
+        performTest(king, checkBoard, 5, 5);
+    }
+
+    @Test
+    public void testBoardFillUpperBound() {
+        Position kingPosition = new Position(0, 3, baseBoard);
+        King king = new King(kingPosition);
+        int[][] checkBoard = {
+                {0, 0, 1, 1, 1},
+                {0, 0, 1, 1, 1},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0}};
+        performTest(king, checkBoard, 5, 5);
+    }
+
+    @Test
+    public void testBoardFillRightBound() {
+        Position kingPosition = new Position(1, 4, baseBoard);
+        King king = new King(kingPosition);
+        int[][] checkBoard = {
+                {0, 0, 0, 1, 1},
+                {0, 0, 0, 1, 1},
+                {0, 0, 0, 1, 1},
                 {0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0}};
         performTest(king, checkBoard, 5, 5);
@@ -38,7 +66,8 @@ public class KingTest extends FigureTest<King> {
     public void testBoardFillCornerCase() {
         Position kingPosition = new Position(4, 4, baseBoard);
         King king = new King(kingPosition);
-        int[][] checkBoard = {{0, 0, 0, 0, 0},
+        int[][] checkBoard = {
+                {0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0},
                 {0, 0, 0, 1, 1},

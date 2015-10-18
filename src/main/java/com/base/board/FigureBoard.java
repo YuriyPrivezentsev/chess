@@ -6,7 +6,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
- * Contains list of figures already placed on board
+ * Contains list of figures already placed on the result board.
  *
  * @author Yuriy Privezentsev
  * @since 10/13/2015
@@ -18,14 +18,23 @@ public class FigureBoard extends AbstractBoard {
         super(width, height);
     }
 
+    /**
+     * Checks whether some of existing is already placed on the cell.
+     */
     public boolean hasFigure(Position underAttack) {
         return figures.containsKey(underAttack);
     }
 
+    /**
+     * Add figure to result board.
+     */
     public void addFigure(Figure figure) {
         figures.put(figure.getPosition(), figure);
     }
 
+    /**
+     * Removes figure from the result board.
+     */
     public void removeFigure(Figure deleteFigure) {
         Figure removed = figures.remove(deleteFigure.getPosition());
         if (!deleteFigure.equals(removed)) {

@@ -26,10 +26,18 @@ public abstract class AbstractFigure implements Figure {
 
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public Position getPosition() {
         return position;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public void setPosition(Position position) {
         this.position = position;
     }
@@ -43,11 +51,17 @@ public abstract class AbstractFigure implements Figure {
         return true;
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @Override
     public int compareTo(Figure other) {
         return getPriority() - other.getPriority();
     }
 
+    /**
+     *  {@inheritDoc}
+     */
     @SuppressWarnings("StringEquality")
     @Override
     public boolean isSameType(Figure other) {
