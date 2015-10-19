@@ -33,6 +33,7 @@ public class Rook extends LongDistanceFigure {
 
     /**
      *  {@inheritDoc}
+     * @param resultBoard
      */
     @Override
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {

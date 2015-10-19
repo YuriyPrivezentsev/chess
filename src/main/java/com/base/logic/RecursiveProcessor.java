@@ -1,11 +1,12 @@
 package com.base.logic;
 
-import com.base.output.GenericResultProcessor;
-import com.base.output.ResultProcessor;
 import com.base.board.FigureBoard;
 import com.base.board.FreeCellsBoard;
 import com.base.board.Position;
+import com.base.board.TreeFigureBoard;
 import com.base.figures.Figure;
+import com.base.output.GenericResultProcessor;
+import com.base.output.ResultProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +63,7 @@ public class RecursiveProcessor implements Processor {
         startResultProcessingThread();
 
         FreeCellsBoard freeCellsBoard = new FreeCellsBoard(width, height);
-        FigureBoard figureBoard = new FigureBoard(width, height);
+        FigureBoard figureBoard = new TreeFigureBoard(width, height);
         placeFigure(freeCellsBoard, figureBoard, null);
 
         long time = System.currentTimeMillis() - startTime;
@@ -76,10 +77,10 @@ public class RecursiveProcessor implements Processor {
             @Override
             public void run() {
                 while (running) {
-                    String result = null;
+                    String result;
                     try {
                         result = resultQueue.take();
-                        if(result.startsWith(SUMMARY)){
+                        if (result.startsWith(SUMMARY)) {
                             resultProcessor.processSummary(result);
                             running = false;
                         } else {

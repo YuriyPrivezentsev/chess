@@ -12,12 +12,12 @@ import static org.junit.Assert.*;
  * @author Yuriy Privezentsev
  * @since 10/13/2015
  */
-public class FigureBoardTest {
-    private FigureBoard figureBoard;
+public abstract class FigureBoardTest<T extends FigureBoard> {
+    private T figureBoard;
 
     @Before
     public void init() {
-        figureBoard = new FigureBoard(2, 2);
+        figureBoard = getFigureBoard(2, 2);
         Position queenPosition = new Position(1, 1, figureBoard);
         figureBoard.addFigure(new Queen(queenPosition));
     }
@@ -40,7 +40,7 @@ public class FigureBoardTest {
 
     @Test
     public void testToString() {
-        FigureBoard figureBoard = new FigureBoard(5, 2);
+        T figureBoard = getFigureBoard(5, 2);
         figureBoard.addFigure(new Queen(new Position(0, 0, figureBoard)));
         figureBoard.addFigure(new Knight(new Position(0, 1, figureBoard)));
         figureBoard.addFigure(new King(new Position(0, 2, figureBoard)));
@@ -51,4 +51,5 @@ public class FigureBoardTest {
         assertEquals(boardView, figureBoard.toString());
     }
 
+    protected abstract T getFigureBoard(int width, int height);
 }
