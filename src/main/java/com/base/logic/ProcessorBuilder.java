@@ -37,7 +37,7 @@ public class ProcessorBuilder {
 
         Deque<Figure> figures = getFigures(tokenizer);
 
-        return new Processor(width, height, figures);
+        return new RecursiveProcessor(width, height, figures);
     }
 
     /**

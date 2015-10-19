@@ -1,7 +1,7 @@
 package com.base.client;
 
-import com.base.output.CsvResultProcessor;
 import com.base.logic.Processor;
+import com.base.output.CsvResultProcessor;
 import com.base.logic.ProcessorBuilder;
 
 import java.io.File;
