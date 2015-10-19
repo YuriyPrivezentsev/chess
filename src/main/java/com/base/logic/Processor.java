@@ -1,5 +1,7 @@
-package com.base;
+package com.base.logic;
 
+import com.base.output.GenericResultProcessor;
+import com.base.output.ResultProcessor;
 import com.base.board.FigureBoard;
 import com.base.board.FreeCellsBoard;
 import com.base.board.Position;

@@ -1,6 +1,7 @@
 package com.base;
 
 import com.base.figures.*;
+import com.base.logic.ProcessorBuilder;
 import org.junit.Test;
 
 import java.util.ArrayList;

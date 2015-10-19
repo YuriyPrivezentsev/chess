@@ -1,4 +1,4 @@
-package com.base;
+package com.base.logic;
 
 import com.base.figures.Figure;
 import com.base.figures.FigureFactory;

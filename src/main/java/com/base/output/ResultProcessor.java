@@ -1,4 +1,4 @@
-package com.base;
+package com.base.output;
 
 /**
  * Processing string representation of the results.

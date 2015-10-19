@@ -1,6 +1,6 @@
 package com.base.figures;
 
-import com.base.ProcessorBuilder;
+import com.base.logic.ProcessorBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;

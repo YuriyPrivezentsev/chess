@@ -1,6 +1,4 @@
-package com.base;
-
-import com.base.board.Board;
+package com.base.output;
 
 import java.io.File;
 import java.io.FileNotFoundException;
