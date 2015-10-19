@@ -1,9 +1,6 @@
 package com.base.logic;
 
-import com.base.board.FigureBoard;
-import com.base.board.FreeCellsBoard;
-import com.base.board.Position;
-import com.base.board.TreeFigureBoard;
+import com.base.board.*;
 import com.base.figures.Figure;
 import com.base.output.GenericResultProcessor;
 import com.base.output.ResultProcessor;
@@ -25,27 +22,18 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class RecursiveProcessor implements Processor {
     private static final Logger LOG = LoggerFactory.getLogger(RecursiveProcessor.class);
     public static final String SUMMARY = "Summary";
-    private final int width;
-    private final int height;
+    private final BoardFactory boardFactory;
     private final Deque<Figure> figures;
-    private int resultCount = 0;
-    private ResultProcessor resultProcessor;
     private Thread resultThread;
+    private int resultCount = 0;
+    private BoardFactory.FigureBoardType figureBoardType = BoardFactory.FigureBoardType.TREE;
+    private ResultProcessor resultProcessor = new GenericResultProcessor();
     private BlockingQueue<String> resultQueue = new LinkedBlockingQueue<>();
     private volatile boolean running;
 
     public RecursiveProcessor(int width, int height, Deque<Figure> figures) {
-        this.width = width;
-        this.height = height;
+        this.boardFactory = new BoardFactory(width,height);
         this.figures = figures;
-        this.resultProcessor = new GenericResultProcessor();
-    }
-
-    public RecursiveProcessor(int width, int height, Deque<Figure> figures, ResultProcessor resultProcessor) {
-        this.width = width;
-        this.height = height;
-        this.figures = figures;
-        this.resultProcessor = resultProcessor;
     }
 
     /**
@@ -56,14 +44,14 @@ public class RecursiveProcessor implements Processor {
         long startTime = System.currentTimeMillis();
         resultCount = 0;
         if (figures.isEmpty()
-                || figures.size() > width * height) {
+                || figures.size() > boardFactory.getTotalCellCount()) {
             return;
         }
 
         startResultProcessingThread();
 
-        FreeCellsBoard freeCellsBoard = new FreeCellsBoard(width, height);
-        FigureBoard figureBoard = new TreeFigureBoard(width, height);
+        FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
+        FigureBoard figureBoard = boardFactory.getFigureBoard(figureBoardType);
         placeFigure(freeCellsBoard, figureBoard, null);
 
         long time = System.currentTimeMillis() - startTime;
@@ -95,6 +83,16 @@ public class RecursiveProcessor implements Processor {
         });
 
         resultThread.start();
+    }
+
+    @Override
+    public BoardFactory.FigureBoardType getFigureBoardType() {
+        return figureBoardType;
+    }
+
+    @Override
+    public void setFigureBoardType(BoardFactory.FigureBoardType figureBoardType) {
+        this.figureBoardType = figureBoardType;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.base.logic;
 
+import com.base.board.BoardFactory;
 import com.base.output.ResultProcessor;
 
 /**
@@ -17,4 +18,9 @@ public interface Processor {
     ResultProcessor getResultProcessor();
 
     void setResultProcessor(ResultProcessor resultProcessor);
+
+    BoardFactory.FigureBoardType getFigureBoardType();
+
+    void setFigureBoardType(BoardFactory.FigureBoardType figureBoardType);
+
 }
