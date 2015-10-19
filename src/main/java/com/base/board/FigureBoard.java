@@ -55,6 +55,7 @@ public class FigureBoard extends AbstractBoard {
                 boardRepresentation.append(figure == null ? FREE_POSITION_MARKER : figure.getName());
                 boardRepresentation.append(" ");
             }
+            boardRepresentation.delete(boardRepresentation.length()-1,boardRepresentation.length());
         }
         return boardRepresentation.toString();
     }

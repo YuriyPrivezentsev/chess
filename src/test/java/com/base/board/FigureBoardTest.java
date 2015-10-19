@@ -47,7 +47,7 @@ public class FigureBoardTest {
         figureBoard.addFigure(new Bishop(new Position(1, 3, figureBoard)));
         figureBoard.addFigure(new Rook(new Position(1, 4, figureBoard)));
 
-        String boardView = "\r\nQ N K - - \r\n- - - B R ";
+        String boardView = "\r\nQ N K - -\r\n- - - B R";
         assertEquals(boardView, figureBoard.toString());
     }
 
