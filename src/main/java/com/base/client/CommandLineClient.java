@@ -1,5 +1,6 @@
 package com.base.client;
 
+import com.base.board.BoardFactory;
 import com.base.logic.Processor;
 import com.base.output.CsvResultProcessor;
 import com.base.logic.ProcessorBuilder;
@@ -37,6 +38,7 @@ public class CommandLineClient {
                 ProcessorBuilder processorBuilder = new ProcessorBuilder();
                 Processor processor = processorBuilder.fromString(input);
                 processor.setResultProcessor(new CsvResultProcessor(output));
+                processor.setFigureBoardType(BoardFactory.FigureBoardType.ARRAY);
                 processor.process();
             } else {
                 System.out.println("Wrong input format!");

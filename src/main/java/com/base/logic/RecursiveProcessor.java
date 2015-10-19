@@ -107,7 +107,7 @@ public class RecursiveProcessor implements Processor {
 
     private void addSummary(long time) {
         String summary = SUMMARY + "\r\nResults count = " + resultCount + "\r\nTime = " + time + "ms.";
-        LOG.debug(summary);
+        LOG.trace(summary);
         resultQueue.offer(summary);
         running = false;
         try {
@@ -115,7 +115,6 @@ public class RecursiveProcessor implements Processor {
         } catch (InterruptedException e) {
             LOG.error("Unable to gracefully shut down the result thread, may suffer data loss");
         }
-        resultProcessor.processSummary(summary);
     }
 
     private void placeFigure(FreeCellsBoard freeCellsBoard, FigureBoard figureBoard, Figure previousProcessedFigure) {
