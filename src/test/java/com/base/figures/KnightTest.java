@@ -1,6 +1,6 @@
 package com.base.figures;
 
-import com.base.board.FigureBoard;
+import com.base.board.TreeFigureBoard;
 import com.base.board.Position;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class KnightTest extends FigureTest<Knight> {
     }
 
     @Override
-    protected Position getOverlappingPosition(FigureBoard figureBoard) {
+    protected Position getOverlappingPosition(TreeFigureBoard figureBoard) {
         return new Position(2, 3, figureBoard);
     }
 
@@ -33,7 +33,7 @@ public class KnightTest extends FigureTest<Knight> {
 
     @Test
     public void testUpperBound() {
-        FigureBoard figureBoard = new FigureBoard(4, 4);
+        TreeFigureBoard figureBoard = new TreeFigureBoard(4, 4);
         Position knightPosition = new Position(0, 2, figureBoard);
         Knight knight = new Knight(knightPosition);
         int[][] checkBoard ={
@@ -47,7 +47,7 @@ public class KnightTest extends FigureTest<Knight> {
 
     @Test
     public void testRightBound() {
-        FigureBoard figureBoard = new FigureBoard(4, 4);
+        TreeFigureBoard figureBoard = new TreeFigureBoard(4, 4);
         Position knightPosition = new Position(1, 3, figureBoard);
         Knight knight = new Knight(knightPosition);
         int[][] checkBoard ={

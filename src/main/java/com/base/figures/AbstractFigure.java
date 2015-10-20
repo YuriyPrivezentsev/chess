@@ -27,7 +27,7 @@ public abstract class AbstractFigure implements Figure {
     }
 
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public Position getPosition() {
@@ -35,7 +35,7 @@ public abstract class AbstractFigure implements Figure {
     }
 
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void setPosition(Position position) {
@@ -52,7 +52,7 @@ public abstract class AbstractFigure implements Figure {
     }
 
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int compareTo(Figure other) {
@@ -60,7 +60,7 @@ public abstract class AbstractFigure implements Figure {
     }
 
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      */
     @SuppressWarnings("StringEquality")
     @Override

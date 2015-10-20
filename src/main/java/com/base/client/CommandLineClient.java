@@ -1,5 +1,6 @@
 package com.base.client;
 
+import com.base.board.BoardFactory;
 import com.base.logic.Processor;
 import com.base.output.CsvResultProcessor;
 import com.base.logic.ProcessorBuilder;

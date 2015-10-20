@@ -27,7 +27,7 @@ public class ProcessorBuilder {
      *              For example 3X3,NX2,RX1 stands for problem of 3?3 board containing 2 Kings and 1 Rook.
      */
     public Processor fromString(String input) {
-        input = input.replace(" ", "");
+        input = input.replace(" ", "").toUpperCase();
         StringTokenizer tokenizer = new StringTokenizer(input, PARAMETER_DELIMITER);
 
         String size = tokenizer.nextToken();

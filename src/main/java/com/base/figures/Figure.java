@@ -1,6 +1,7 @@
 package com.base.figures;
 
 import com.base.board.FigureBoard;
+import com.base.board.TreeFigureBoard;
 import com.base.board.Position;
 
 import java.util.Collection;

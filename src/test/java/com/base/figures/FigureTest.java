@@ -1,7 +1,7 @@
 package com.base.figures;
 
 import com.base.board.Board;
-import com.base.board.FigureBoard;
+import com.base.board.TreeFigureBoard;
 import com.base.board.FreeCellsBoard;
 import com.base.board.Position;
 import org.junit.Before;
@@ -35,7 +35,7 @@ public abstract class FigureTest<T extends Figure> {
     }
 
     protected void performTest(Figure figure, int[][] checkBoard, int width, int height) {
-        FigureBoard figureBoard = new FigureBoard(width, height);
+        TreeFigureBoard figureBoard = new TreeFigureBoard(width, height);
         FreeCellsBoard freeCellsBoard = new FreeCellsBoard(width, height);
 
         Collection<Position> figureCoverage = figure.placeOnBoard(figureBoard);
@@ -63,7 +63,7 @@ public abstract class FigureTest<T extends Figure> {
 
     @Test
     public void testOverlapping() {
-        FigureBoard figureBoard = new FigureBoard(7, 7);
+        TreeFigureBoard figureBoard = new TreeFigureBoard(7, 7);
         Position firstPosition = new Position(1, 1, figureBoard);
         T firstFigure = getNewFigure(firstPosition);
         figureBoard.addFigure(firstFigure);
@@ -75,7 +75,7 @@ public abstract class FigureTest<T extends Figure> {
         assertTrue(overlappingFigurePositions.isEmpty());
     }
 
-    protected Position getOverlappingPosition(FigureBoard figureBoard) {
+    protected Position getOverlappingPosition(TreeFigureBoard figureBoard) {
         return new Position(1, 0, figureBoard);
     }
 

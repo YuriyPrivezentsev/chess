@@ -36,4 +36,12 @@ public class Position implements Comparable<Position> {
     public int compareTo(Position other) {
         return getWeightOnBoard() - other.getWeightOnBoard();
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "column=" + column +
+                ", line=" + line +
+                '}';
+    }
 }

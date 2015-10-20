@@ -19,7 +19,10 @@ public class FreeCellsBoardTest {
     public void testFreeCell() {
 
         FreeCellsBoard freeCellsBoard = new FreeCellsBoard(2, 2);
-        freeCellsBoard.occupyCell(new Position(0, 0, freeCellsBoard));
+        Position position = new Position(0, 0, freeCellsBoard);
+        Collection<Position> takenPositions = new ArrayList<>();
+        takenPositions.add(position);
+        freeCellsBoard.occupyCells(takenPositions);
         Position freeCell = freeCellsBoard.getFirstFreeCell();
 
         assertEquals(freeCell.getColumn(), 1);
@@ -29,7 +32,10 @@ public class FreeCellsBoardTest {
     @Test
     public void testToString() {
         FreeCellsBoard freeCellsBoard = new FreeCellsBoard(2, 2);
-        freeCellsBoard.occupyCell(new Position(0, 1, freeCellsBoard));
+        Position position = new Position(0, 1, freeCellsBoard);
+        Collection<Position> takenPositions = new ArrayList<>();
+        takenPositions.add(position);
+        freeCellsBoard.occupyCells(takenPositions);
 
         String boardView = "\r\n- X \r\n- - ";
         assertEquals(boardView, freeCellsBoard.toString());
@@ -49,11 +55,13 @@ public class FreeCellsBoardTest {
         FreeCellsBoard freeCellsBoard = new FreeCellsBoard(3, 2);
         assertEquals(6, freeCellsBoard.getFreeCellsCount());
 
-        freeCellsBoard.occupyCell(new Position(1, 1, freeCellsBoard));
+        Collection<Position> positions = new ArrayList<>(3);
+        positions.add(new Position(1, 1, freeCellsBoard));
+        freeCellsBoard.occupyCells(positions);
         assertEquals(5, freeCellsBoard.getFreeCellsCount());
 
-        Collection<Position> positions = new ArrayList<>(2);
-        positions.add(new Position(1,0,freeCellsBoard));
+        positions.clear();
+        positions.add(new Position(1, 0, freeCellsBoard));
         positions.add(new Position(1, 1, freeCellsBoard));
         positions.add(new Position(1, 2, freeCellsBoard));
         freeCellsBoard.occupyCells(positions);

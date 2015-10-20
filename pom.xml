@@ -6,11 +6,12 @@
 
     <groupId>BoardGame</groupId>
     <artifactId>ChessLocator</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <properties>
         <slf4j.version>1.7.12</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <mockito.version>1.9.5</mockito.version>
+        <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
     </properties>
 
     <build>
@@ -59,5 +60,54 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>unit-tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+              <plugins>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                  <version>${maven-surefire-plugin.version}</version>
+                  <configuration>
+                    <excludes>
+                      <exclude>**/CalculationProcessTest.java</exclude>
+                    </excludes>
+                  </configuration>
+                </plugin>
+              </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>integration-tests</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+              <plugins>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                  <version>${maven-surefire-plugin.version}</version>
+                  <configuration>
+                      <includes>
+                        <include>**/CalculationProcessTest.java</include>
+                      </includes>
+                  </configuration>
+                </plugin>
+              </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>all-tests</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 
 </project>

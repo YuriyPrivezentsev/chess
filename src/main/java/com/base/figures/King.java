@@ -27,6 +27,7 @@ public class King extends AbstractFigure {
 
     /**
      *  {@inheritDoc}
+     * @param resultBoard
      */
     @Override
     public Collection<Position> placeOnBoard(FigureBoard resultBoard) {

@@ -44,13 +44,6 @@ public class FreeCellsBoard extends AbstractBoard {
     }
 
     /**
-     * Mark one specific cell as taken when they are under attack or occupied by some figure.
-     */
-    public void occupyCell(Position occupied) {
-        freeCells.remove(occupied);
-    }
-
-    /**
      * Unmark cells as under attack or occupied.
      * @param figureCoverage - cells to be unmarked
      */

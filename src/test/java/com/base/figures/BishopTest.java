@@ -1,6 +1,6 @@
 package com.base.figures;
 
-import com.base.board.FigureBoard;
+import com.base.board.TreeFigureBoard;
 import com.base.board.Position;
 import org.junit.Test;
 
@@ -52,7 +52,7 @@ public class BishopTest extends FigureTest<Bishop> {
     }
 
     @Override
-    protected Position getOverlappingPosition(FigureBoard figureBoard) {
+    protected Position getOverlappingPosition(TreeFigureBoard figureBoard) {
         return new Position(3, 3, figureBoard);
     }
 
