@@ -54,12 +54,17 @@ public class SemiRecursiveProcessor extends AbstractProcessor{
                 figure.setPosition(freeCell);
                 Collection<Position> coverage = figure.placeOnBoard(figureBoard);
                 if(!coverage.isEmpty()){
-                    figureBoard.addFigure(figure);
                     Collection<Position> actualCoverage = freeCellsBoard.occupyCells(coverage);
-                    processedPositions.push(actualCoverage);
-                    processedFigures.push(figure);
-                    figure = figures.pop();
-                    freeCell = getNextFreeCell(figure, freeCellsBoard);
+                    if (figures.size() <= freeCellsBoard.getFreeCellsCount()) {
+                        figureBoard.addFigure(figure);
+                        processedPositions.push(actualCoverage);
+                        processedFigures.push(figure);
+                        figure = figures.pop();
+                        freeCell = getNextFreeCell(figure, freeCellsBoard);
+                    } else {
+                        freeCellsBoard.freeCells(actualCoverage);
+                        freeCell = freeCellsBoard.getNextFreeCell(figure);
+                    }
                 } else {
                     freeCell = freeCellsBoard.getNextFreeCell(figure);
                 }
