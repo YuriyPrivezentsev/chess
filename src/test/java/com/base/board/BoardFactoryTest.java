@@ -16,7 +16,7 @@ public class BoardFactoryTest {
     public void testSize() {
         assertEquals(6, boardFactory.getTotalCellCount());
 
-        String expectedBoard = "\r\n- - -\r\n- - -";
+        String expectedBoard = "\r\n-,-,-\r\n-,-,-";
         FigureBoard figureBoard = boardFactory.getFigureBoard();
         assertEquals(expectedBoard, figureBoard.toString());
     }

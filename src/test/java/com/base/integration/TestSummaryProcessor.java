@@ -1,5 +1,6 @@
 package com.base.integration;
 
+import com.base.board.FigureBoard;
 import com.base.output.ResultProcessor;
 
 import java.util.regex.Matcher;
@@ -16,7 +17,7 @@ public class TestSummaryProcessor implements ResultProcessor{
     private int numberOfSolutions;
 
     @Override
-    public void processResult(String result) {
+    public void processResult(FigureBoard result) {
 
     }
 
@@ -31,6 +32,21 @@ public class TestSummaryProcessor implements ResultProcessor{
         }
     }
 
+    /**
+     * Empty method stub in this implementation.
+     */
+    @Override
+    public void open() {
+
+    }
+
+    /**
+     * Empty method stub in this implementation.
+     */
+    @Override
+    public void close() {
+
+    }
     public int getNumberOfSolutions() {
         return numberOfSolutions;
     }

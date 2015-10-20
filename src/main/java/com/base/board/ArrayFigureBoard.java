@@ -59,13 +59,29 @@ public class ArrayFigureBoard extends AbstractFigureBoard {
      * {@inheritDoc}
      */
     @Override
+    public FigureBoard deepCopy() {
+        ArrayFigureBoard result = new ArrayFigureBoard(getWidth(), getHeight());
+        for (List<Figure> line : cells) {
+            for (Figure figure : line) {
+                if (figure != null){
+                   result.addFigure(figure.deepCopy());
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String toString() {
         StringBuilder boardRepresentation = new StringBuilder();
         for (List<Figure> line : cells) {
             boardRepresentation.append("\r\n");
             for (Figure figure : line) {
                 boardRepresentation.append(figure == null ? FREE_POSITION_MARKER : figure.getName());
-                boardRepresentation.append(" ");
+                boardRepresentation.append(POSITION_SEPARATOR);
             }
             boardRepresentation.delete(boardRepresentation.length() - 1, boardRepresentation.length());
         }
