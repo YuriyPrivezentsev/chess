@@ -18,10 +18,11 @@ import static org.junit.Assert.assertEquals;
  * @since 10/18/2015
  */
 public class ProcessorBuilderTest {
+    ProcessorBuilder processorBuilder = new ProcessorBuilder();
+
     @Test
     public void testOrder() {
         String input = "QX1,KX1,NX1,BX1,RX1,1XN";
-        ProcessorBuilder processorBuilder = new ProcessorBuilder();
         StringTokenizer tokenizer = new StringTokenizer(input, ProcessorBuilder.PARAMETER_DELIMITER);
         Deque<Figure> figures = processorBuilder.getFigures(tokenizer);
 
@@ -37,4 +38,21 @@ public class ProcessorBuilderTest {
 
     }
 
+    @Test
+    public void testRecursiveType() {
+        String input = "4x4,2xQ";
+
+        processorBuilder.setProcessorType(ProcessorBuilder.ProcessorType.RECURSIVE);
+        Processor processor = processorBuilder.fromString(input);
+        assertEquals(RecursiveProcessor.class,processor.getClass());
+    }
+
+    @Test
+    public void testSemiRecursiveType() {
+        String input = "4x4,2xQ";
+
+        processorBuilder.setProcessorType(ProcessorBuilder.ProcessorType.SEMI_RECURSIVE);
+        Processor processor = processorBuilder.fromString(input);
+        assertEquals(SemiRecursiveProcessor.class,processor.getClass());
+    }
 }

@@ -15,10 +15,16 @@ import java.util.StringTokenizer;
  * @since 10/18/2015
  */
 public class ProcessorBuilder {
+    public enum ProcessorType {
+        RECURSIVE,
+        SEMI_RECURSIVE
+    }
+
     public static final String PARAMETER_DELIMITER = ",";
     public static final String MULTIPLIER_DELIMITER = "X";
 
     private final FigureFactory figureFactory = new FigureFactory();
+    private ProcessorType processorType = ProcessorType.RECURSIVE;
 
     /**
      * Parse input string to processor parameters and create processor.
@@ -37,7 +43,14 @@ public class ProcessorBuilder {
 
         Deque<Figure> figures = getFigures(tokenizer);
 
-        return new RecursiveProcessor(width, height, figures);
+        switch (processorType){
+            case RECURSIVE:
+                return new RecursiveProcessor(width, height, figures);
+            case SEMI_RECURSIVE:
+                return new SemiRecursiveProcessor(width, height, figures);
+            default:
+                throw new IllegalStateException("Unsupported processor type " + processorType);
+        }
     }
 
     /**
@@ -53,6 +66,14 @@ public class ProcessorBuilder {
         }
         Collections.sort(result);
         return result;
+    }
+
+    public ProcessorType getProcessorType() {
+        return processorType;
+    }
+
+    public void setProcessorType(ProcessorType processorType) {
+        this.processorType = processorType;
     }
 
     private int getInteger(StringTokenizer tokenizer) {

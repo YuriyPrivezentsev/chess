@@ -60,6 +60,22 @@ public class FreeCellsBoard extends AbstractBoard {
     }
 
     /**
+     * Returns the free cell next to the position of the figure provided.
+     * If figure has no position then it returns first free cell.
+     * @param figure - figure to count from
+     * @return - first free cell in regards to present figure position or null if none.
+     */
+    public Position getNextFreeCell(Figure figure){
+        Position position = figure.getPosition();
+
+        if(position == null){
+            return getFirstFreeCell();
+        }
+
+        return getNextFreeCell(position);
+    }
+
+    /**
      * Retrieve first cell after given not marked as occupied.
      * @param position - cell to start with.
      * @return - first free cell after given or null if none.
