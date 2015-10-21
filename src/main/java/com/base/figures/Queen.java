@@ -58,4 +58,12 @@ public class Queen extends LongDistanceFigure {
     public String getName() {
         return NAME;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Figure deepCopy() {
+        return new Queen(getPosition());
+    }
 }

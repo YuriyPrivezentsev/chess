@@ -37,7 +37,7 @@ public class CommandLineClient {
             if (pattern.matcher(input).matches()) {
                 ProcessorBuilder processorBuilder = new ProcessorBuilder();
                 Processor processor = processorBuilder.fromString(input);
-                processor.setResultProcessor(new CsvResultProcessor(output));
+                processor.setFigureBoardType(BoardFactory.FigureBoardType.ARRAY);
                 processor.process();
             } else {
                 System.out.println("Wrong input format!");

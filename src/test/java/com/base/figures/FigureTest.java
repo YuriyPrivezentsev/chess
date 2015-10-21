@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -32,6 +33,18 @@ public abstract class FigureTest<T extends Figure> {
     public void init() {
         MockitoAnnotations.initMocks(this);
         Mockito.when(baseBoard.getWidth()).thenReturn(5);
+    }
+
+    @Test
+    public void testDeepCopy() {
+        Position position = new Position(1, 1, baseBoard);
+        T figure = getNewFigure(position);
+        Figure newFigure = figure.deepCopy();
+
+        assertEquals(figure.getClass(),newFigure.getClass());
+        assertEquals(position.getLine(),newFigure.getPosition().getLine());
+        assertEquals(position.getColumn(),newFigure.getPosition().getColumn());
+        assertEquals(position.getWeightOnBoard(),newFigure.getPosition().getWeightOnBoard());
     }
 
     protected void performTest(Figure figure, int[][] checkBoard, int width, int height) {

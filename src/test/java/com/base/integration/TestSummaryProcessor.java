@@ -1,9 +1,7 @@
 package com.base.integration;
 
+import com.base.board.FigureBoard;
 import com.base.output.ResultProcessor;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Summary processor implementation for test.
@@ -12,23 +10,17 @@ import java.util.regex.Pattern;
  * @author Yuriy Privezentsev
  * @since 10/19/2015
  */
-public class TestSummaryProcessor implements ResultProcessor{
-    private int numberOfSolutions;
+public class TestSummaryProcessor implements ResultProcessor {
+    private int numberOfSolutions = 0;
 
     @Override
-    public void processResult(String result) {
-
+    public void addResult(FigureBoard result) {
+        numberOfSolutions++;
     }
 
     @Override
-    public void processSummary(String summary) {
-        Pattern pattern = Pattern.compile("Results count = [0-9]+");
-        Matcher matcher = pattern.matcher(summary);
-        if (matcher.find()){
-            String resultCount = matcher.group(0);
-            resultCount = resultCount.replace("Results count = ", "").replace(" ","");
-            numberOfSolutions = Integer.parseInt(resultCount);
-        }
+    public void addSummary(long time) {
+
     }
 
     public int getNumberOfSolutions() {

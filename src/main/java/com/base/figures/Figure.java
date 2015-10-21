@@ -47,4 +47,9 @@ public interface Figure extends Comparable<Figure> {
      * Test whether the current figure is of the same class as the other one.
      */
     boolean isSameType(Figure other);
+
+    /**
+     * Creates the deep copy of the figure, including the position.
+     */
+    Figure deepCopy();
 }

@@ -30,8 +30,6 @@ public class SemiRecursiveProcessor extends AbstractProcessor{
     @Override
     public void process() {
         long startTime = System.currentTimeMillis();
-        resultCount = 0;
-        startResultProcessingThread();
         if (isTrivialCase()){
             return;
         }
@@ -54,12 +52,17 @@ public class SemiRecursiveProcessor extends AbstractProcessor{
                 figure.setPosition(freeCell);
                 Collection<Position> coverage = figure.placeOnBoard(figureBoard);
                 if(!coverage.isEmpty()){
-                    figureBoard.addFigure(figure);
                     Collection<Position> actualCoverage = freeCellsBoard.occupyCells(coverage);
-                    processedPositions.push(actualCoverage);
-                    processedFigures.push(figure);
-                    figure = figures.pop();
-                    freeCell = getNextFreeCell(figure, freeCellsBoard);
+                    if (figures.size() <= freeCellsBoard.getFreeCellsCount()) {
+                        figureBoard.addFigure(figure);
+                        processedPositions.push(actualCoverage);
+                        processedFigures.push(figure);
+                        figure = figures.pop();
+                        freeCell = getNextFreeCell(figure, freeCellsBoard);
+                    } else {
+                        freeCellsBoard.freeCells(actualCoverage);
+                        freeCell = freeCellsBoard.getNextFreeCell(figure);
+                    }
                 } else {
                     freeCell = freeCellsBoard.getNextFreeCell(figure);
                 }
@@ -71,7 +74,7 @@ public class SemiRecursiveProcessor extends AbstractProcessor{
         }
 
         long time = System.currentTimeMillis() - startTime;
-        addSummary(time);
+        getResultProcessor().addSummary(time);
     }
 
     private Position getNextFreeCell(Figure figure, FreeCellsBoard freeCellsBoard) {
@@ -104,7 +107,7 @@ public class SemiRecursiveProcessor extends AbstractProcessor{
             Collection<Position> coverage = figure.placeOnBoard(figureBoard);
             if(!coverage.isEmpty()){
                 figureBoard.addFigure(figure);
-                processResult(figureBoard);
+                getResultProcessor().addResult(figureBoard);
                 figureBoard.removeFigure(figure);
             }
             freeCell = freeCellsBoard.getNextFreeCell(figure);

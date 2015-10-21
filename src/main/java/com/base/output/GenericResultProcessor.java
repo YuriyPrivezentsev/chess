@@ -1,5 +1,6 @@
 package com.base.output;
 
+import com.base.board.FigureBoard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,19 +12,22 @@ import org.slf4j.LoggerFactory;
  */
 public class GenericResultProcessor implements ResultProcessor{
     private static final Logger LOG = LoggerFactory.getLogger(GenericResultProcessor.class);
+    private int resultCount = 0;
     /**
      * {@inheritDoc}
      */
     @Override
-    public void processResult(String result) {
-        LOG.info(result);
+    public void addResult(FigureBoard result) {
+        resultCount++;
     }
+
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void processSummary(String summary) {
+    public void addSummary(long time) {
+        String summary = String.format(SUMMARY, resultCount,time);
         LOG.info(summary);
     }
 }
