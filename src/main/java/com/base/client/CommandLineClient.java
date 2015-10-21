@@ -36,10 +36,8 @@ public class CommandLineClient {
         while (!input.equals("EXIT")) {
             if (pattern.matcher(input).matches()) {
                 ProcessorBuilder processorBuilder = new ProcessorBuilder();
-//                processorBuilder.setProcessorType(ProcessorBuilder.ProcessorType.SEMI_RECURSIVE);
                 Processor processor = processorBuilder.fromString(input);
-                processor.setResultProcessor(new CsvResultProcessor(output));
-//                processor.setFigureBoardType(BoardFactory.FigureBoardType.ARRAY);
+                processor.setFigureBoardType(BoardFactory.FigureBoardType.ARRAY);
                 processor.process();
             } else {
                 System.out.println("Wrong input format!");
