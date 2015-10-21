@@ -18,7 +18,9 @@ public class GenericResultProcessor implements ResultProcessor{
      */
     @Override
     public void processResult(FigureBoard result) {
-        LOG.info(result.toString()+"\r\n");
+        if (LOG.isTraceEnabled()) {
+            LOG.trace(result.toString() + "\r\n");
+        }
     }
 
     /**

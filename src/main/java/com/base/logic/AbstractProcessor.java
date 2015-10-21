@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Deque;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Common processor functionality implementation.
@@ -42,10 +43,10 @@ public abstract class AbstractProcessor implements Processor {
             @Override
             public void run() {
                 resultProcessor.open();
-                while (running && !resultQueue.isEmpty()) {
+                while (running || !resultQueue.isEmpty()) {
                     FigureBoard result;
                     try {
-                        result = resultQueue.take();
+                        result = resultQueue.poll(100, TimeUnit.MILLISECONDS);
                         resultProcessor.processResult(result);
                         if(LOG.isDebugEnabled()){
                             LOG.debug(result.toString());
@@ -91,6 +92,7 @@ public abstract class AbstractProcessor implements Processor {
 
     protected void addSummary(long time) {
         String summary = SUMMARY + "\r\nResults count = " + resultCount + "\r\nTime = " + time + "ms.";
+        running = false;
         LOG.debug(summary);
         try {
             resultThread.join();
@@ -104,7 +106,7 @@ public abstract class AbstractProcessor implements Processor {
 
 
     protected void processResult(FigureBoard figureBoard) {
-        resultQueue.offer(figureBoard);
+        resultQueue.offer(figureBoard.deepCopy());
         resultCount++;
     }
 
