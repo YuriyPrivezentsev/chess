@@ -47,4 +47,12 @@ public class Rook extends LongDistanceFigure {
     public String getName() {
         return NAME;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Figure deepCopy() {
+        return new Rook(getPosition());
+    }
 }

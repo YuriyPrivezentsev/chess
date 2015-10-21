@@ -47,9 +47,20 @@ public abstract class FigureBoardTest<T extends FigureBoard> {
         figureBoard.addFigure(new Bishop(new Position(1, 3, figureBoard)));
         figureBoard.addFigure(new Rook(new Position(1, 4, figureBoard)));
 
-        String boardView = "\r\nQ N K - -\r\n- - - B R";
+        String boardView = "\r\nQ,N,K,-,-\r\n-,-,-,B,R";
         assertEquals(boardView, figureBoard.toString());
     }
+
+    @Test
+    public void testDeepCopy() {
+        this.figureBoard.addFigure(new Queen(new Position(1, 0, figureBoard)));
+        FigureBoard copy = this.figureBoard.deepCopy();
+
+        assertEquals(figureBoard.getClass(),copy.getClass());
+        assertEquals(figureBoard.toString(),copy.toString());
+
+    }
+
 
     protected abstract T getFigureBoard(int width, int height);
 }

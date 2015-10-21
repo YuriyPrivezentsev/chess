@@ -49,10 +49,19 @@ public class TreeFigureBoard extends AbstractFigureBoard {
                 Position position = new Position(line, column, this);
                 Figure figure = figures.get(position);
                 boardRepresentation.append(figure == null ? FREE_POSITION_MARKER : figure.getName());
-                boardRepresentation.append(" ");
+                boardRepresentation.append(POSITION_SEPARATOR);
             }
             boardRepresentation.delete(boardRepresentation.length()-1,boardRepresentation.length());
         }
         return boardRepresentation.toString();
+    }
+
+    @Override
+    public FigureBoard deepCopy() {
+        TreeFigureBoard result = new TreeFigureBoard(getWidth(), getHeight());
+        for (Figure figure : figures.values()) {
+            result.addFigure(figure.deepCopy());
+        }
+        return result;
     }
 }

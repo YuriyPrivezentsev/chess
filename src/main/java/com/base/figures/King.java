@@ -67,4 +67,13 @@ public class King extends AbstractFigure {
     public String getName() {
         return NAME;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Figure deepCopy() {
+        return new King(getPosition());
+    }
+
 }

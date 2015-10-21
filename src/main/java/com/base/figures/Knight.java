@@ -69,4 +69,12 @@ public class Knight extends AbstractFigure {
     public String getName() {
         return NAME;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Figure deepCopy() {
+        return new Knight(getPosition());
+    }
 }

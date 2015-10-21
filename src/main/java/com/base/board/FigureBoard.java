@@ -24,4 +24,9 @@ public interface FigureBoard extends Board {
      * Removes figure from the result board.
      */
     void removeFigure(Figure deleteFigure);
+
+    /**
+     * Creates the deep copy of the board, including figures and cells.
+     */
+    FigureBoard deepCopy();
 }

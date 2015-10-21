@@ -17,28 +17,64 @@ import static org.junit.Assert.assertEquals;
  * @since 10/19/2015
  */
 public class CalculationProcessTest {
-    @Test
-    public void testSmallBoard() {
-        performTest("3x3,2xK,1xR", 4);
-    }
 
     @Test
-    public void testMediumBoard() {
-        performTest("4x4,2xR,4xN", 8);
+    public void testSmallBoardSemiRecursiveTree() {
+        performTest("3x3,2xK,1xR", 4, BoardFactory.FigureBoardType.TREE, ProcessorBuilder.ProcessorType.SEMI_RECURSIVE);
+    }
+    @Test
+
+    public void testSmallBoardSemiRecursiveArray() {
+        performTest("3x3,2xK,1xR", 4, BoardFactory.FigureBoardType.ARRAY, ProcessorBuilder.ProcessorType.SEMI_RECURSIVE);
+    }
+    @Test
+    public void testSmallBoardRecursiveTree() {
+        performTest("3x3,2xK,1xR", 4, BoardFactory.FigureBoardType.TREE, ProcessorBuilder.ProcessorType.RECURSIVE);
+    }
+    @Test
+    public void testSmallBoardRecursiveArray() {
+        performTest("3x3,2xK,1xR", 4, BoardFactory.FigureBoardType.ARRAY, ProcessorBuilder.ProcessorType.RECURSIVE);
     }
 
     @Test
-    public void testEightQueen() {
-        performTest("8x8,8xQ", 92);
+    public void testMediumBoardSemiRecursiveTree() {
+        performTest("4x4,2xR,4xN", 8, BoardFactory.FigureBoardType.TREE, ProcessorBuilder.ProcessorType.SEMI_RECURSIVE);
+    }
+    @Test
+
+    public void testMediumBoardSemiRecursiveArray() {
+        performTest("4x4,2xR,4xN", 8, BoardFactory.FigureBoardType.ARRAY, ProcessorBuilder.ProcessorType.SEMI_RECURSIVE);
+    }
+    @Test
+    public void testMediumBoardRecursiveTree() {
+        performTest("4x4,2xR,4xN", 8, BoardFactory.FigureBoardType.TREE, ProcessorBuilder.ProcessorType.RECURSIVE);
+    }
+    @Test
+    public void testMediumBoardRecursiveArray() {
+        performTest("4x4,2xR,4xN", 8, BoardFactory.FigureBoardType.ARRAY, ProcessorBuilder.ProcessorType.RECURSIVE);
     }
 
-    private void performTest(String input, int expectedResultCount) {
-        performTest(input, expectedResultCount, BoardFactory.FigureBoardType.TREE);
-        performTest(input, expectedResultCount, BoardFactory.FigureBoardType.ARRAY);
+    @Test
+    public void testEightQueenSemiRecursiveTree() {
+        performTest("8x8,8xQ", 92, BoardFactory.FigureBoardType.TREE, ProcessorBuilder.ProcessorType.SEMI_RECURSIVE);
+    }
+    @Test
+
+    public void testEightQueenSemiRecursiveArray() {
+        performTest("8x8,8xQ", 92, BoardFactory.FigureBoardType.ARRAY, ProcessorBuilder.ProcessorType.SEMI_RECURSIVE);
+    }
+    @Test
+    public void testEightQueenRecursiveTree() {
+        performTest("8x8,8xQ", 92, BoardFactory.FigureBoardType.TREE, ProcessorBuilder.ProcessorType.RECURSIVE);
+    }
+    @Test
+    public void testEightQueenRecursiveArray() {
+        performTest("8x8,8xQ", 92, BoardFactory.FigureBoardType.ARRAY, ProcessorBuilder.ProcessorType.RECURSIVE);
     }
 
-    private void performTest(String input, int expectedResultCount, BoardFactory.FigureBoardType figureBoardType) {
+    private void performTest(String input, int expectedResultCount, BoardFactory.FigureBoardType figureBoardType, ProcessorBuilder.ProcessorType processorType) {
         ProcessorBuilder processorBuilder = new ProcessorBuilder();
+        processorBuilder.setProcessorType(processorType);
         TestSummaryProcessor testSummaryProcessor = new TestSummaryProcessor();
         Processor processor = processorBuilder.fromString(input);
         processor.setResultProcessor(testSummaryProcessor);

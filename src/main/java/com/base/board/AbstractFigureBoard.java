@@ -11,6 +11,7 @@ import com.base.figures.Figure;
 public abstract class AbstractFigureBoard extends AbstractBoard implements FigureBoard {
     protected static final String OVERLAPPING_POSITIONS_MESSAGE = "Trying to place a %s  on top of the %s at position %s";
     protected static final String WRONG_FIGURE_MESSAGE = "Trying to delete the wrong figure at position %s deleting %s  were was %s";
+    protected static final String POSITION_SEPARATOR = ",";
 
     public AbstractFigureBoard(int width, int height) {
         super(width, height);

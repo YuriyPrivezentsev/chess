@@ -1,8 +1,13 @@
 package com.base.output;
 
+import com.base.board.FigureBoard;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Writes result to csv file.
@@ -10,36 +15,59 @@ import java.io.PrintWriter;
  * @author Yuriy Privezentsev
  * @since 10/19/2015
  */
-public class CsvResultProcessor implements ResultProcessor {
-
-    public static final String CSV_DELIMITER = ",";
-    private PrintWriter writer;
+public class CsvResultProcessor extends AbstractMultithreadedResultProcessor {
+    private static final Logger LOG = LoggerFactory.getLogger(CsvResultProcessor.class);
+    private static final String CSV_DELIMITER = ",";
+    private BufferedWriter writer;
     private final File outputFile;
 
-    public CsvResultProcessor(File outputFile) throws FileNotFoundException {
+    public CsvResultProcessor(File outputFile) {
         this.outputFile = outputFile;
-        writer = new PrintWriter(this.outputFile);
+        if(outputFile.exists()){
+            outputFile.delete();
+        }
+        try {
+            outputFile.createNewFile();
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to create output file.  No result will be published.", e);
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void processResult(String result) {
-        result = result.replace(" ", CSV_DELIMITER);
-        writer.println(result);
-        writer.flush();
+    protected void processResult(FigureBoard result) {
+        try {
+            writer.write(result.toString() + "\r\n");
+            writer.flush();
+        } catch (IOException e) {
+            LOG.warn("Unable to write the result to csv", e);
+        }
     }
 
-    /**
-     *{@inheritDoc}
-     */
     @Override
-    public void processSummary(String summary) {
-        summary = summary.replace("=", CSV_DELIMITER);
-        writer.println();
-        writer.println(summary);
-        writer.flush();
-        writer.close();
+    protected void processSummary(String summary) {
+        try {
+            writer.write(summary.replace(" = ",CSV_DELIMITER));
+            writer.flush();
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to save summary.", e);
+        }
+    }
+
+    @Override
+    protected void open() {
+        try {
+            writer = new BufferedWriter(new FileWriter(this.outputFile, true));
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to open file for writing.  No result will be published.", e);
+        }
+    }
+
+    @Override
+    protected void close() {
+        try {
+            writer.close();
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to finalise file. No result will be published.", e);
+        }
     }
 }
