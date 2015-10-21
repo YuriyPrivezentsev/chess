@@ -12,38 +12,22 @@ import org.slf4j.LoggerFactory;
  */
 public class GenericResultProcessor implements ResultProcessor{
     private static final Logger LOG = LoggerFactory.getLogger(GenericResultProcessor.class);
+    private int resultCount = 0;
     /**
      * {@inheritDoc}
-     * @param result
      */
     @Override
-    public void processResult(FigureBoard result) {
-        if (LOG.isTraceEnabled()) {
-            LOG.trace(result.toString() + "\r\n");
-        }
+    public void addResult(FigureBoard result) {
+        resultCount++;
     }
+
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void processSummary(String summary) {
+    public void addSummary(long time) {
+        String summary = String.format(SUMMARY, resultCount,time);
         LOG.info(summary);
-    }
-
-    /**
-     * Empty method stub in this implementation.
-     */
-    @Override
-    public void open() {
-
-    }
-
-    /**
-     * Empty method stub in this implementation.
-     */
-    @Override
-    public void close() {
-
     }
 }

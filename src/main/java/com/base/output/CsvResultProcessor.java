@@ -15,49 +15,46 @@ import java.io.IOException;
  * @author Yuriy Privezentsev
  * @since 10/19/2015
  */
-public class CsvResultProcessor implements ResultProcessor {
+public class CsvResultProcessor extends AbstractMultithreadedResultProcessor {
     private static final Logger LOG = LoggerFactory.getLogger(CsvResultProcessor.class);
-    public static final String CSV_DELIMITER = ",";
+    private static final String CSV_DELIMITER = ",";
     private BufferedWriter writer;
     private final File outputFile;
 
     public CsvResultProcessor(File outputFile) {
         this.outputFile = outputFile;
+        if(outputFile.exists()){
+            outputFile.delete();
+        }
+        try {
+            outputFile.createNewFile();
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to create output file.  No result will be published.", e);
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     * @param result
-     */
     @Override
-    public void processResult(FigureBoard result) {
+    protected void processResult(FigureBoard result) {
         try {
             writer.write(result.toString() + "\r\n");
             writer.flush();
         } catch (IOException e) {
-            LOG.warn("Unable to write the result to csv",e);
+            LOG.warn("Unable to write the result to csv", e);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void processSummary(String summary) {
+    protected void processSummary(String summary) {
         try {
-            writer.write(summary);
+            writer.write(summary.replace(" = ",CSV_DELIMITER));
             writer.flush();
-            writer.close();
         } catch (IOException e) {
             throw new IllegalStateException("Unable to save summary.", e);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void open() {
+    protected void open() {
         try {
             writer = new BufferedWriter(new FileWriter(this.outputFile, true));
         } catch (IOException e) {
@@ -66,7 +63,7 @@ public class CsvResultProcessor implements ResultProcessor {
     }
 
     @Override
-    public void close() {
+    protected void close() {
         try {
             writer.close();
         } catch (IOException e) {

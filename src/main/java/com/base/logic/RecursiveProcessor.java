@@ -27,19 +27,16 @@ public class RecursiveProcessor extends AbstractProcessor {
     @Override
     public void process() {
         long startTime = System.currentTimeMillis();
-        resultCount = 0;
         if (isTrivialCase()){
             return;
         }
-
-        startResultProcessingThread();
 
         FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
         FigureBoard figureBoard = boardFactory.getFigureBoard(getFigureBoardType());
         placeFigure(freeCellsBoard, figureBoard, null);
 
         long time = System.currentTimeMillis() - startTime;
-        addSummary(time);
+        getResultProcessor().addSummary(time);
     }
 
     private void placeFigure(FreeCellsBoard freeCellsBoard, FigureBoard figureBoard, Figure previousProcessedFigure) {
@@ -63,7 +60,7 @@ public class RecursiveProcessor extends AbstractProcessor {
                 figureBoard.addFigure(figure);
                 Collection<Position> nonOverlappedCoverage = Collections.EMPTY_LIST;
                 if (figures.isEmpty()) {
-                    processResult(figureBoard);
+                    getResultProcessor().addResult(figureBoard);
                 } else {
                     nonOverlappedCoverage = freeCellsBoard.occupyCells(figureCoverage);
                     placeFigure(freeCellsBoard, figureBoard, figure);

@@ -38,7 +38,7 @@ public class CommandLineClient {
                 ProcessorBuilder processorBuilder = new ProcessorBuilder();
 //                processorBuilder.setProcessorType(ProcessorBuilder.ProcessorType.SEMI_RECURSIVE);
                 Processor processor = processorBuilder.fromString(input);
-//                processor.setResultProcessor(new CsvResultProcessor(output));
+                processor.setResultProcessor(new CsvResultProcessor(output));
 //                processor.setFigureBoardType(BoardFactory.FigureBoardType.ARRAY);
                 processor.process();
             } else {
