@@ -12,7 +12,7 @@ import java.util.Collection;
  * @since 10/12/2015
  */
 public class Queen extends LongDistanceFigure {
-    public static final String NAME = "Q";
+    private static final Type TYPE = Type.QUEEN;
     private static final int PRIORITY = 3;
 
     public Queen(Position position) {
@@ -55,8 +55,8 @@ public class Queen extends LongDistanceFigure {
      *  {@inheritDoc}
      */
     @Override
-    public String getName() {
-        return NAME;
+    public Type getType() {
+        return TYPE;
     }
 
     /**

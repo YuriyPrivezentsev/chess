@@ -103,4 +103,9 @@ public class KnightTest extends FigureTest<Knight> {
                 {0, 0, 0, 0, 0, 0, 1}};
         performTest(knight, checkBoard, 7, 7);
     }
+
+    @Override
+    protected Figure.Type getExpectedFigureType() {
+        return Figure.Type.KNIGHT;
+    }
 }

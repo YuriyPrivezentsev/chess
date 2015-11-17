@@ -24,8 +24,8 @@ public abstract class AbstractFigureBoard extends AbstractBoard implements Figur
         Figure previousFigure = tryToInsert(figure);
         if(previousFigure != null){
             throw new IllegalStateException(String.format(AbstractFigureBoard.OVERLAPPING_POSITIONS_MESSAGE,
-                    figure.getName(),
-                    previousFigure.getName(),
+                    figure.getType(),
+                    previousFigure.getType(),
                     figure.getPosition()));
         }
     }
@@ -41,8 +41,8 @@ public abstract class AbstractFigureBoard extends AbstractBoard implements Figur
         if (!deleteFigure.equals(removed)) {
             throw new IllegalArgumentException(String.format(AbstractFigureBoard.WRONG_FIGURE_MESSAGE,
                     deleteFigure.getPosition(),
-                    deleteFigure.getName(),
-                    removed.getName()));
+                    deleteFigure.getType(),
+                    removed.getType()));
         }
     }
 

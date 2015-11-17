@@ -13,7 +13,7 @@ import java.util.Collection;
  * @since 10/12/2015
  */
 public class King extends AbstractFigure {
-    public static final String NAME = "K";
+    private static final Type TYPE = Type.KING;
     public static final int KING_COVERAGE_CAPACITY = 9;
     private static final int PRIORITY = 5;
 
@@ -64,8 +64,8 @@ public class King extends AbstractFigure {
      *  {@inheritDoc}
      */
     @Override
-    public String getName() {
-        return NAME;
+    public Type getType() {
+        return TYPE;
     }
 
     /**

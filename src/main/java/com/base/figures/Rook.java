@@ -12,7 +12,7 @@ import java.util.Collection;
  * @since 10/12/2015
  */
 public class Rook extends LongDistanceFigure {
-    public static final String NAME = "R";
+    private static final Type TYPE = Type.ROOK;
     private static final int PRIORITY = 1;
 
     public Rook(Position position) {
@@ -44,8 +44,8 @@ public class Rook extends LongDistanceFigure {
      *  {@inheritDoc}
      */
     @Override
-    public String getName() {
-        return NAME;
+    public Type getType() {
+        return TYPE;
     }
 
     /**

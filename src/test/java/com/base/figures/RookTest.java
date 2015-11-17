@@ -50,4 +50,9 @@ public class RookTest extends FigureTest<Rook> {
     protected Rook getNewFigure(Position position) {
         return new Rook(position);
     }
+
+    @Override
+    protected Figure.Type getExpectedFigureType() {
+        return Figure.Type.ROOK;
+    }
 }

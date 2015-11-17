@@ -62,16 +62,17 @@ public class FigureFactory {
     }
 
     public Figure getFigure(String name) {
-        switch (name) {
-            case King.NAME:
+        Figure.Type type = Figure.Type.fromBoardSymbol(name);
+        switch (type) {
+            case KING:
                 return new King();
-            case Queen.NAME:
+            case QUEEN:
                 return new Queen();
-            case Rook.NAME:
+            case ROOK:
                 return new Rook();
-            case Bishop.NAME:
+            case BISHOP:
                 return new Bishop();
-            case Knight.NAME:
+            case KNIGHT:
                 return new Knight();
         }
         throw new IllegalArgumentException("There is no figure with such notation: " + name);

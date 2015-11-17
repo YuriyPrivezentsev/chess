@@ -88,9 +88,17 @@ public abstract class FigureTest<T extends Figure> {
         assertTrue(overlappingFigurePositions.isEmpty());
     }
 
+    @Test
+    public void testType() {
+        T figure = getNewFigure(null);
+        assertEquals(getExpectedFigureType(),figure.getType());
+    }
+
     protected Position getOverlappingPosition(TreeFigureBoard figureBoard) {
         return new Position(1, 0, figureBoard);
     }
 
     protected abstract T getNewFigure(Position position);
+
+    protected abstract Figure.Type getExpectedFigureType();
 }

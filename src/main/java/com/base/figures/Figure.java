@@ -1,7 +1,6 @@
 package com.base.figures;
 
 import com.base.board.FigureBoard;
-import com.base.board.TreeFigureBoard;
 import com.base.board.Position;
 
 import java.util.Collection;
@@ -13,6 +12,34 @@ import java.util.Collection;
  * @since 10/12/2015
  */
 public interface Figure extends Comparable<Figure> {
+    enum Type {
+        KING("K"),
+        QUEEN("Q"),
+        KNIGHT("N"),
+        ROOK("R"),
+        BISHOP("B"),
+        UNDEFINED("ERROR");
+
+        private final String boardSymbol;
+
+        Type(String boardSymbol) {
+            this.boardSymbol = boardSymbol;
+        }
+
+        public String getBoardSymbol() {
+            return boardSymbol;
+        }
+
+        public static Type fromBoardSymbol(String boardSymbol) {
+            for (Type type : Type.values()) {
+                if (type.getBoardSymbol().equals(boardSymbol)) {
+                    return type;
+                }
+            }
+            return UNDEFINED;
+        }
+    }
+
     /**
      * Try to position figure on board making sure it neither can be taken nor can take other figures on board.
      *
@@ -41,7 +68,12 @@ public interface Figure extends Comparable<Figure> {
     /**
      * Gets the letter mark for the figure
      */
-    String getName();
+    String getBoardSymbol();
+
+    /**
+     * Get figure type
+     */
+    Type getType();
 
     /**
      * Test whether the current figure is of the same class as the other one.
