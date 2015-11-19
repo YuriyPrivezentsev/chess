@@ -55,4 +55,9 @@ public class RookTest extends FigureTest<Rook> {
     protected Figure.Type getExpectedFigureType() {
         return Figure.Type.ROOK;
     }
+
+    @Override
+    protected String getExpectedBoardSymbol() {
+        return "R";
+    }
 }

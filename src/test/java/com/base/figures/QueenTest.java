@@ -55,4 +55,9 @@ public class QueenTest extends FigureTest<Queen> {
     protected Figure.Type getExpectedFigureType() {
         return Figure.Type.QUEEN;
     }
+
+    @Override
+    protected String getExpectedBoardSymbol() {
+        return "Q";
+    }
 }

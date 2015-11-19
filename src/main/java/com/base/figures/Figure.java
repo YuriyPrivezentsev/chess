@@ -17,8 +17,7 @@ public interface Figure extends Comparable<Figure> {
         QUEEN("Q"),
         KNIGHT("N"),
         ROOK("R"),
-        BISHOP("B"),
-        UNDEFINED("ERROR");
+        BISHOP("B");
 
         private final String boardSymbol;
 
@@ -36,7 +35,7 @@ public interface Figure extends Comparable<Figure> {
                     return type;
                 }
             }
-            return UNDEFINED;
+            throw new IllegalArgumentException("There is no figure with such notation: " + boardSymbol);
         }
     }
 

@@ -108,4 +108,9 @@ public class KnightTest extends FigureTest<Knight> {
     protected Figure.Type getExpectedFigureType() {
         return Figure.Type.KNIGHT;
     }
+
+    @Override
+    protected String getExpectedBoardSymbol() {
+        return "N";
+    }
 }

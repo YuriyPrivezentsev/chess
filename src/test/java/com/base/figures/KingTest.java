@@ -79,8 +79,15 @@ public class KingTest extends FigureTest<King> {
     protected King getNewFigure(Position position) {
         return new King(position);
     }
+
     @Override
     protected Figure.Type getExpectedFigureType() {
         return Figure.Type.KING;
     }
+
+    @Override
+    protected String getExpectedBoardSymbol() {
+        return "K";
+    }
+
 }

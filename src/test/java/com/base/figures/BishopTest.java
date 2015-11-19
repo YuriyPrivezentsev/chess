@@ -65,4 +65,9 @@ public class BishopTest extends FigureTest<Bishop> {
     protected Figure.Type getExpectedFigureType() {
         return Figure.Type.BISHOP;
     }
+
+    @Override
+    protected String getExpectedBoardSymbol() {
+        return "B";
+    }
 }
