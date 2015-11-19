@@ -3,6 +3,7 @@ package com.base.board;
 import com.base.figures.Figure;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Contains the list of all free (not taken and not under attack) cells.
@@ -35,11 +36,7 @@ public class FreeCellsBoard extends AbstractBoard {
      */
     public Collection<Position> occupyCells(Collection<Position> figureCoverage) {
         Collection<Position> realCoverage = new ArrayList<>(figureCoverage.size());
-        for (Position position : figureCoverage) {
-            if(freeCells.remove(position)){
-                realCoverage.add(position);
-            }
-        }
+        realCoverage.addAll(figureCoverage.stream().filter(freeCells::remove).collect(Collectors.toList()));
         return realCoverage;
     }
 

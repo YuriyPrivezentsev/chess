@@ -62,11 +62,7 @@ public class ArrayFigureBoard extends AbstractFigureBoard {
     public FigureBoard deepCopy() {
         ArrayFigureBoard result = new ArrayFigureBoard(getWidth(), getHeight());
         for (List<Figure> line : cells) {
-            for (Figure figure : line) {
-                if (figure != null){
-                   result.addFigure(figure.deepCopy());
-                }
-            }
+            line.stream().filter(figure -> figure != null).forEach(figure -> result.addFigure(figure.deepCopy()));
         }
         return result;
     }
