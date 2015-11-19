@@ -27,49 +27,67 @@ public class RecursiveProcessor extends AbstractProcessor {
     @Override
     public void process() {
         long startTime = System.currentTimeMillis();
-        if (isTrivialCase()){
+        if (isTrivialCase()) {
             return;
         }
 
         FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
         FigureBoard figureBoard = boardFactory.getFigureBoard(getFigureBoardType());
-        placeFigure(freeCellsBoard, figureBoard, null);
+        placeNextFigure(freeCellsBoard, figureBoard, null);
 
         long time = System.currentTimeMillis() - startTime;
         getResultProcessor().addSummary(time);
     }
 
-    private void placeFigure(FreeCellsBoard freeCellsBoard, FigureBoard figureBoard, Figure previousProcessedFigure) {
+    private void placeNextFigure(FreeCellsBoard freeCellsBoard, FigureBoard figureBoard, Figure previousProcessedFigure) {
         if (figures.size() > freeCellsBoard.getFreeCellsCount()) {
             return;
         }
 
         Position freeCell;
         Figure figure = figures.poll();
+        freeCell = getNextFreeCell(freeCellsBoard, previousProcessedFigure, figure);
+
+        while (freeCell != null) {
+            tryCell(freeCell, figure, freeCellsBoard, figureBoard);
+            freeCell = freeCellsBoard.getNextFreeCell(freeCell);
+        }
+        figures.push(figure);
+    }
+
+    private void tryCell(Position freeCell, Figure figure, FreeCellsBoard freeCellsBoard, FigureBoard figureBoard) {
+        figure.setPosition(freeCell);
+        Collection<Position> figureCoverage = figure.placeOnBoard(figureBoard);
+        if (!figureCoverage.isEmpty()) {
+            figureBoard.addFigure(figure);
+
+            Collection<Position> nonOverlappedCoverage = placeFigure(figure, figureBoard, freeCellsBoard, figureCoverage);
+
+            figureBoard.removeFigure(figure);
+            freeCellsBoard.freeCells(nonOverlappedCoverage);
+        }
+    }
+
+    private Collection<Position> placeFigure(Figure figure, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard, Collection<Position> figureCoverage) {
+        @SuppressWarnings("unchecked")
+        Collection<Position> nonOverlappedCoverage = Collections.EMPTY_LIST;
+        if (figures.isEmpty()) {
+            getResultProcessor().addResult(figureBoard);
+        } else {
+            nonOverlappedCoverage = freeCellsBoard.occupyCells(figureCoverage);
+            placeNextFigure(freeCellsBoard, figureBoard, figure);
+        }
+        return nonOverlappedCoverage;
+    }
+
+    private Position getNextFreeCell(FreeCellsBoard freeCellsBoard, Figure previousProcessedFigure, Figure figure) {
+        Position freeCell;
         if (previousProcessedFigure == null
                 || !figure.isSameType(previousProcessedFigure)) {
             freeCell = freeCellsBoard.getFirstFreeCell();
         } else {
             freeCell = freeCellsBoard.getNextFreeCell(previousProcessedFigure.getPosition());
         }
-
-        while (freeCell != null) {
-            figure.setPosition(freeCell);
-            Collection<Position> figureCoverage = figure.placeOnBoard(figureBoard);
-            if (!figureCoverage.isEmpty()) {
-                figureBoard.addFigure(figure);
-                Collection<Position> nonOverlappedCoverage = Collections.EMPTY_LIST;
-                if (figures.isEmpty()) {
-                    getResultProcessor().addResult(figureBoard);
-                } else {
-                    nonOverlappedCoverage = freeCellsBoard.occupyCells(figureCoverage);
-                    placeFigure(freeCellsBoard, figureBoard, figure);
-                }
-                figureBoard.removeFigure(figure);
-                freeCellsBoard.freeCells(nonOverlappedCoverage);
-            }
-            freeCell = freeCellsBoard.getNextFreeCell(freeCell);
-        }
-        figures.push(figure);
+        return freeCell;
     }
 }
