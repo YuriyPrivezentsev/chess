@@ -16,8 +16,20 @@ import java.util.StringTokenizer;
  */
 public class ProcessorBuilder {
     public enum ProcessorType {
-        RECURSIVE,
-        SEMI_RECURSIVE
+        RECURSIVE {
+            @Override
+            Processor buildProcessor(int width, int height, Deque<Figure> figures) {
+                return new RecursiveProcessor(width,height,figures);
+            }
+        },
+        SEMI_RECURSIVE {
+            @Override
+            Processor buildProcessor(int width, int height, Deque<Figure> figures) {
+                return new SemiRecursiveProcessor(width,height,figures);
+            }
+        };
+
+        abstract Processor buildProcessor(int width, int height, Deque<Figure> figures);
     }
 
     public static final String PARAMETER_DELIMITER = ",";
@@ -43,14 +55,7 @@ public class ProcessorBuilder {
 
         Deque<Figure> figures = getFigures(tokenizer);
 
-        switch (processorType){
-            case RECURSIVE:
-                return new RecursiveProcessor(width, height, figures);
-            case SEMI_RECURSIVE:
-                return new SemiRecursiveProcessor(width, height, figures);
-            default:
-                throw new IllegalStateException("Unsupported processor type " + processorType);
-        }
+        return processorType.buildProcessor(width,height,figures);
     }
 
     /**
