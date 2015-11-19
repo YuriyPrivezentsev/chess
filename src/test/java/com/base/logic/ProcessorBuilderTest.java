@@ -21,7 +21,7 @@ public class ProcessorBuilderTest {
     ProcessorBuilder processorBuilder = new ProcessorBuilder();
 
     @Test
-    public void testOrder() {
+    public void testFiguresOrder() {
         String input = "QX1,KX1,NX1,BX1,RX1,1XN";
         StringTokenizer tokenizer = new StringTokenizer(input, ProcessorBuilder.PARAMETER_DELIMITER);
         Deque<Figure> figures = processorBuilder.getFigures(tokenizer);
@@ -39,7 +39,7 @@ public class ProcessorBuilderTest {
     }
 
     @Test
-    public void testRecursiveType() {
+    public void testBuildRecursiveType() {
         String input = "4x4,2xQ";
 
         processorBuilder.setProcessorType(ProcessorBuilder.ProcessorType.RECURSIVE);
@@ -48,7 +48,7 @@ public class ProcessorBuilderTest {
     }
 
     @Test
-    public void testSemiRecursiveType() {
+    public void testBuildSemiRecursiveType() {
         String input = "4x4,2xQ";
 
         processorBuilder.setProcessorType(ProcessorBuilder.ProcessorType.SEMI_RECURSIVE);

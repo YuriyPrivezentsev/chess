@@ -75,7 +75,7 @@ public abstract class FigureTest<T extends Figure> {
     }
 
     @Test
-    public void testOverlapping() {
+    public void testNoPlacingUnderAttack() {
         TreeFigureBoard figureBoard = new TreeFigureBoard(7, 7);
         Position firstPosition = new Position(1, 1, figureBoard);
         T firstFigure = getNewFigure(firstPosition);

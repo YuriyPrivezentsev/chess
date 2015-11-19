@@ -43,7 +43,8 @@ public interface Figure extends Comparable<Figure> {
      * Try to position figure on board making sure it neither can be taken nor can take other figures on board.
      *
      * @param resultBoard - the board with figures placed
-     * @return - The collection of positions which can be attacked by the figure, including its own place
+     * @return - The collection of positions which can be attacked by the figure, including its own place. Empty
+     * collection if the figure cannot be placed.
      */
     Collection<Position> placeOnBoard(FigureBoard resultBoard);
 
