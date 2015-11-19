@@ -8,12 +8,30 @@ package com.base.board;
  */
 public class BoardFactory {
     public enum FigureBoardType {
-        ARRAY,
-        TREE
+        ARRAY {
+            @Override
+            FigureBoard buildBoard(int width, int height) {
+                return new ArrayFigureBoard(width, height);
+            }
+        },
+        TREE {
+            @Override
+            FigureBoard buildBoard(int width, int height) {
+                return new TreeFigureBoard(width, height);
+            }
+        };
+
+        abstract FigureBoard buildBoard(int width, int height);
     }
 
     public enum FreeCellsBoardType{
-        TREE
+        TREE {
+            @Override
+            FreeCellsBoard buildBoard(int width, int height) {
+                return new FreeCellsBoard(width, height);
+            }
+        };
+        abstract FreeCellsBoard buildBoard(int width, int height);
     }
 
     private final int width;
@@ -38,14 +56,7 @@ public class BoardFactory {
      * @return - new FigureBoard instance
      */
     public FigureBoard getFigureBoard(FigureBoardType implementation) {
-        switch (implementation){
-            case ARRAY:
-                return new ArrayFigureBoard(width,height);
-            case TREE:
-                return new TreeFigureBoard(width,height);
-            default:
-                throw new IllegalArgumentException("Unsupported FigureBoard type " + implementation);
-        }
+        return implementation.buildBoard(width, height);
     }
 
     /**
@@ -62,12 +73,7 @@ public class BoardFactory {
      * @return - new FreeCellsBoard instance
      */
     public FreeCellsBoard getFreeCellsBoard(FreeCellsBoardType implementation) {
-        switch (implementation){
-            case TREE:
-                return new FreeCellsBoard(width,height);
-            default:
-                throw new IllegalArgumentException("Unsupported FreeCellsBoard type " + implementation);
-        }
+        return implementation.buildBoard(width, height);
     }
 
     public int getTotalCellCount(){
