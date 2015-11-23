@@ -21,15 +21,20 @@ public class CsvResultProcessor extends AbstractMultithreadedResultProcessor {
     private BufferedWriter writer;
     private final File outputFile;
 
-    public CsvResultProcessor(File outputFile) {
-        this.outputFile = outputFile;
+    public CsvResultProcessor(String outputFileName) {
+        boolean success = true;
+        this.outputFile = new File(outputFileName);
         if(outputFile.exists()){
-            outputFile.delete();
+            success = outputFile.delete();
         }
         try {
-            outputFile.createNewFile();
+            success &= outputFile.createNewFile();
         } catch (IOException e) {
             throw new IllegalStateException("Unable to create output file.  No result will be published.", e);
+        }
+
+        if(!success){
+            throw new IllegalStateException("Unable to create output file.  No result will be published.");
         }
     }
 

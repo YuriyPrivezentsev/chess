@@ -1,7 +1,9 @@
 package com.base.logic;
 
+import com.base.board.BoardFactory;
 import com.base.figures.Figure;
 import com.base.figures.FigureFactory;
+import com.base.output.ResultProcessorFactory;
 
 import java.util.Collections;
 import java.util.Deque;
@@ -19,13 +21,13 @@ public class ProcessorBuilder {
         RECURSIVE {
             @Override
             Processor buildProcessor(int width, int height, Deque<Figure> figures) {
-                return new RecursiveProcessor(width,height,figures);
+                return new RecursiveProcessor(width, height, figures);
             }
         },
         SEMI_RECURSIVE {
             @Override
             Processor buildProcessor(int width, int height, Deque<Figure> figures) {
-                return new SemiRecursiveProcessor(width,height,figures);
+                return new SemiRecursiveProcessor(width, height, figures);
             }
         };
 
@@ -37,9 +39,13 @@ public class ProcessorBuilder {
 
     private final FigureFactory figureFactory = new FigureFactory();
     private ProcessorType processorType = ProcessorType.RECURSIVE;
+    private BoardFactory.FigureBoardType figureBoardType = BoardFactory.FigureBoardType.TREE;
+    private ResultProcessorFactory.ResultProcessorType resultProcessorType = ResultProcessorFactory.ResultProcessorType.GENERIC;
+    private ResultProcessorFactory resultProcessorFactory = new ResultProcessorFactory();
 
     /**
      * Parse input string to processor parameters and create processor.
+     *
      * @param input - processor parameters string in form
      *              board_widthXboard_height,figure_nameXcount.
      *              For example 3X3,NX2,RX1 stands for problem of 3?3 board containing 2 Kings and 1 Rook.
@@ -55,7 +61,11 @@ public class ProcessorBuilder {
 
         Deque<Figure> figures = getFigures(tokenizer);
 
-        return processorType.buildProcessor(width,height,figures);
+        Processor solutionProcessor = processorType.buildProcessor(width, height, figures);
+        solutionProcessor.setFigureBoardType(figureBoardType);
+        solutionProcessor.setResultProcessor(resultProcessorFactory.buildResultProcessor(resultProcessorType));
+
+        return solutionProcessor;
     }
 
     /**
@@ -79,6 +89,30 @@ public class ProcessorBuilder {
 
     public void setProcessorType(ProcessorType processorType) {
         this.processorType = processorType;
+    }
+
+    public BoardFactory.FigureBoardType getFigureBoardType() {
+        return figureBoardType;
+    }
+
+    public void setFigureBoardType(BoardFactory.FigureBoardType figureBoardType) {
+        this.figureBoardType = figureBoardType;
+    }
+
+    public ResultProcessorFactory.ResultProcessorType getResultProcessorType() {
+        return resultProcessorType;
+    }
+
+    public void setResultProcessorType(ResultProcessorFactory.ResultProcessorType resultProcessorType) {
+        this.resultProcessorType = resultProcessorType;
+    }
+
+    public ResultProcessorFactory getResultProcessorFactory() {
+        return resultProcessorFactory;
+    }
+
+    public void setResultProcessorFactory(ResultProcessorFactory resultProcessorFactory) {
+        this.resultProcessorFactory = resultProcessorFactory;
     }
 
     private int getInteger(StringTokenizer tokenizer) {
