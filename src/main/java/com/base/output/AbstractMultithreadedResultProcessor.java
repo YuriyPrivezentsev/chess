@@ -28,24 +28,21 @@ public abstract class AbstractMultithreadedResultProcessor implements ResultProc
     protected void startResultProcessingThread() {
         running = true;
 
-        resultThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                open();
-                while (running || !resultQueue.isEmpty()) {
-                    FigureBoard result;
-                    try {
-                        result = resultQueue.poll(100, TimeUnit.MILLISECONDS);
-                        processResult(result);
-                        if(LOG.isDebugEnabled()){
-                            LOG.debug(result.toString());
-                        }
-                    } catch (InterruptedException e) {
-                        LOG.error("Unable to save the result", e);
+        resultThread = new Thread(() -> {
+            open();
+            while (running || !resultQueue.isEmpty()) {
+                FigureBoard result;
+                try {
+                    result = resultQueue.poll(100, TimeUnit.MILLISECONDS);
+                    processResult(result);
+                    if(LOG.isDebugEnabled()){
+                        LOG.debug(result.toString());
                     }
+                } catch (InterruptedException e) {
+                    LOG.error("Unable to save the result", e);
                 }
-                close();
             }
+            close();
         });
         resultThread.start();
     }

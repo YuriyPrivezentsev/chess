@@ -1,7 +1,6 @@
 package com.base.logic;
 
 import com.base.board.BoardFactory;
-import com.base.board.FigureBoard;
 import com.base.figures.Figure;
 import com.base.output.GenericResultProcessor;
 import com.base.output.ResultProcessor;
