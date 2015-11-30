@@ -15,16 +15,18 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Deque;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
  * Unit test for @link{SemiRecursiveProcessor}
- *
+ * <p>
  * Unlike most of the tests on the project this is a white-box test using PrivilegedAccessor framework to invoke private
  * methods of the tested class. The testing of private methods is justified by the fact that tested class has a little of
  * public API but still incorporates complex logic.
@@ -32,6 +34,7 @@ import static org.mockito.Mockito.*;
  * @author Yuriy Privezentsev
  * @since 11/24/2015
  */
+@SuppressWarnings("unchecked")
 public class SemiRecursiveProcessorTest {
     private static ProcessorBuilder processorBuilder;
     private SemiRecursiveProcessor processor;
@@ -51,12 +54,12 @@ public class SemiRecursiveProcessorTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        processor = (SemiRecursiveProcessor) processorBuilder.fromString("2x2,1xQ");
-        processor.setResultProcessor(resultProcessor);
     }
 
     @Test
     public void testPlaceLastFigure() throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+        processor = (SemiRecursiveProcessor) processorBuilder.fromString("2x2,1xQ");
+        processor.setResultProcessor(resultProcessor);
 
         BoardFactory boardFactory = new BoardFactory(2, 2);
         FigureBoard figureBoard = boardFactory.getFigureBoard();
@@ -74,6 +77,39 @@ public class SemiRecursiveProcessorTest {
         verify(resultProcessor, times(2)).addResult(any(FigureBoard.class));
     }
 
+    @Test
+    public void testPlaceNextFigure() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        processor = (SemiRecursiveProcessor) processorBuilder.fromString("3x3,2xK,1xR");
+        Deque<Figure> figures = (Deque<Figure>) PA.getValue(processor, "figures");
+        BoardFactory boardFactory = new BoardFactory(3, 3);
+
+        FigureBoard figureBoard = boardFactory.getFigureBoard(BoardFactory.FigureBoardType.ARRAY);
+        FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
+
+        Figure rook = figures.pop();
+        rook.setPosition(new Position(0, 1, figureBoard));
+        Collection<Position> positions = rook.placeOnBoard(figureBoard);
+        figureBoard.addFigure(rook);
+        freeCellsBoard.occupyCells(positions);
+
+        Figure king = new King();
+        Position position = new Position(1, 0, freeCellsBoard);
+        Object calculationState = getCalculationState(processor, king, position);
+
+        String signature = "processNextState(" +
+                calculationState.getClass().getName() + "," +
+                FigureBoard.class.getName() + "," +
+                FreeCellsBoard.class.getName() + ")";
+        Object resultState = PA.invokeMethod(processor, signature, calculationState, figureBoard, freeCellsBoard);
+
+        Figure resultFigure = (Figure) PA.getValue(resultState, "figure");
+        Position freeCell = (Position) PA.getValue(resultState, "freeCell");
+
+        assertTrue(resultFigure.isSameType(new King()));
+        assertEquals(1, freeCell.getLine());
+        assertEquals(2, freeCell.getColumn());
+    }
+
     private Object getCalculationState(SemiRecursiveProcessor processor, Figure figure, Position position)
             throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
         Class<?> calculationStateClass =
@@ -81,7 +117,7 @@ public class SemiRecursiveProcessorTest {
                         .filter(aClass -> aClass.getName().contains("CalculationState")).findFirst().get();
 
         Class[] argumentTypes = {SemiRecursiveProcessor.class, Figure.class, Position.class};
-        return PA.instantiate(calculationStateClass, argumentTypes,processor, figure, position);
+        return PA.instantiate(calculationStateClass, argumentTypes, processor, figure, position);
     }
 
 }
