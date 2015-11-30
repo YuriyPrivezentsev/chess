@@ -12,8 +12,6 @@ import junit.extensions.PA;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -37,10 +35,10 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings("unchecked")
 public class SemiRecursiveProcessorTest {
     private static ProcessorBuilder processorBuilder;
-    private SemiRecursiveProcessor processor;
 
-    @Mock
-    private ResultProcessor resultProcessor;
+    private SemiRecursiveProcessor processor;
+    private FigureBoard figureBoard;
+    private FreeCellsBoard freeCellsBoard;
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -52,20 +50,21 @@ public class SemiRecursiveProcessorTest {
     }
 
     @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
+    public void  init(){
+        processor = (SemiRecursiveProcessor) processorBuilder.fromString("3x3,2xK,1xR");
+
+        BoardFactory boardFactory = new BoardFactory(3, 3);
+        figureBoard = boardFactory.getFigureBoard();
+        freeCellsBoard = boardFactory.getFreeCellsBoard();
     }
+
 
     @Test
     public void testPlaceLastFigure() throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
-        processor = (SemiRecursiveProcessor) processorBuilder.fromString("2x2,1xQ");
-        processor.setResultProcessor(resultProcessor);
-
-        BoardFactory boardFactory = new BoardFactory(2, 2);
-        FigureBoard figureBoard = boardFactory.getFigureBoard();
-        FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
         Figure figure = new King();
-        Position position = new Position(1, 0, freeCellsBoard);
+        ResultProcessor resultProcessor = mock(ResultProcessor.class);
+        processor.setResultProcessor(resultProcessor);
+        Position position = new Position(2, 0, freeCellsBoard);
         Object calculationState = getCalculationState(processor, figure, position);
 
         String placeFigure = "placeLastFigure(" +
@@ -74,17 +73,12 @@ public class SemiRecursiveProcessorTest {
                 FreeCellsBoard.class.getName() + ")";
         PA.invokeMethod(processor, placeFigure, calculationState, figureBoard, freeCellsBoard);
 
-        verify(resultProcessor, times(2)).addResult(any(FigureBoard.class));
+        verify(resultProcessor, times(3)).addResult(any(FigureBoard.class));
     }
 
     @Test
     public void testProcessNextState() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        processor = (SemiRecursiveProcessor) processorBuilder.fromString("3x3,2xK,1xR");
         Deque<Figure> figures = (Deque<Figure>) PA.getValue(processor, "figures");
-        BoardFactory boardFactory = new BoardFactory(3, 3);
-
-        FigureBoard figureBoard = boardFactory.getFigureBoard(BoardFactory.FigureBoardType.ARRAY);
-        FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
 
         Figure rook = figures.pop();
         rook.setPosition(new Position(0, 1, figureBoard));
@@ -112,14 +106,9 @@ public class SemiRecursiveProcessorTest {
 
     @Test
     public void testGetNextValidState() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        processor = (SemiRecursiveProcessor) processorBuilder.fromString("3x3,2xK,1xR");
         Deque<Figure> figures = (Deque<Figure>) PA.getValue(processor, "figures");
         Deque<Figure> processedFigures = (Deque<Figure>) PA.getValue(processor, "processedFigures");
         Deque<Collection<Position>> processedPositions = (Deque<Collection<Position>>) PA.getValue(processor, "processedPositions");
-        BoardFactory boardFactory = new BoardFactory(3, 3);
-
-        FigureBoard figureBoard = boardFactory.getFigureBoard(BoardFactory.FigureBoardType.ARRAY);
-        FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
 
         Figure rook = figures.pop();
         rook.setPosition(new Position(0, 0, figureBoard));
@@ -156,12 +145,7 @@ public class SemiRecursiveProcessorTest {
 
     @Test
     public void testPlaceFigure() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        processor = (SemiRecursiveProcessor) processorBuilder.fromString("3x3,2xK,1xR");
         Deque<Figure> figures = (Deque<Figure>) PA.getValue(processor, "figures");
-        BoardFactory boardFactory = new BoardFactory(3, 3);
-
-        FigureBoard figureBoard = boardFactory.getFigureBoard(BoardFactory.FigureBoardType.ARRAY);
-        FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
 
         Figure rook = figures.pop();
         Position initialPosition = new Position(0, 0, figureBoard);
@@ -192,7 +176,7 @@ public class SemiRecursiveProcessorTest {
         assertEquals(1, processedPositions.size());
 
         assertEquals(1, figures.size());
-        assertEquals(Figure.Type.KING,figures.peek().getType());
+        assertEquals(Figure.Type.KING, figures.peek().getType());
     }
 
     private Object getCalculationState(SemiRecursiveProcessor processor, Figure figure, Position position)
