@@ -50,30 +50,32 @@ public class SemiRecursiveProcessor extends AbstractProcessor {
         getResultProcessor().addSummary(time);
     }
 
-    private CalculationState processNextState(CalculationState state, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
+    private CalculationState processNextState(final CalculationState state, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
         state.getFigure().setPosition(state.getFreeCell());
         Collection<Position> coverage = state.getFigure().placeOnBoard(figureBoard);
+        CalculationState newState;
         if (!coverage.isEmpty()) {
-            state = placeFigure(state, coverage, figureBoard, freeCellsBoard);
+            newState = placeFigure(state, coverage, figureBoard, freeCellsBoard);
         } else {
-            state = state.getNextState(freeCellsBoard);
+            newState = state.getNextState(freeCellsBoard);
         }
-        return getNextValidState(state, figureBoard, freeCellsBoard);
+        return getNextValidState(newState, figureBoard, freeCellsBoard);
     }
 
-    private CalculationState placeFigure(CalculationState state, Collection<Position> coverage, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
+    private CalculationState placeFigure(final CalculationState state, Collection<Position> coverage, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
         Collection<Position> actualCoverage = freeCellsBoard.occupyCells(coverage);
+        CalculationState newState;
         if (figures.size() <= freeCellsBoard.getFreeCellsCount()) {
             figureBoard.addFigure(state.getFigure());
             processedPositions.push(actualCoverage);
             processedFigures.push(state.getFigure());
             Figure figure = figures.pop();
-            state = new CalculationState(figure, getNextFreeCell(figure, freeCellsBoard));
+            newState = new CalculationState(figure, getNextFreeCell(figure, freeCellsBoard));
         } else {
             freeCellsBoard.freeCells(actualCoverage);
-            state = state.getNextState(freeCellsBoard);
+            newState = state.getNextState(freeCellsBoard);
         }
-        return state;
+        return newState;
     }
 
     private CalculationState getNextValidState(final CalculationState state, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {

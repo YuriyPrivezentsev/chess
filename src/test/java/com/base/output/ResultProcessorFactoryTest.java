@@ -25,9 +25,16 @@ public class ResultProcessorFactoryTest {
 
     @Test
     public void testBuildCsv() {
-        ResultProcessor resultProcessor = factory.buildResultProcessor(ResultProcessorFactory.ResultProcessorType.CSV);
-        assertEquals(CsvResultProcessor.class, resultProcessor.getClass());
-        cleanup();
+        File file = new File(factory.getCsvFileName());
+        boolean performTest = true;
+        if(file.exists()){
+            performTest = file.delete();
+        }
+        if (performTest) {
+            ResultProcessor resultProcessor = factory.buildResultProcessor(ResultProcessorFactory.ResultProcessorType.CSV);
+            assertEquals(CsvResultProcessor.class, resultProcessor.getClass());
+            cleanup();
+        }
     }
 
     private void cleanup() {
