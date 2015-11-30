@@ -17,7 +17,7 @@ import java.util.Deque;
  * @author Yuriy Privezentsev
  * @since 10/20/2015
  */
-public class SemiRecursiveProcessor extends AbstractProcessor{
+public class SemiRecursiveProcessor extends AbstractProcessor {
     private Deque<Figure> processedFigures;
     private Deque<Collection<Position>> processedPositions;
 
@@ -30,46 +30,19 @@ public class SemiRecursiveProcessor extends AbstractProcessor{
     @Override
     public void process() {
         long startTime = System.currentTimeMillis();
-        if (isTrivialCase()){
+        if (isTrivialCase()) {
             return;
         }
 
         FigureBoard figureBoard = boardFactory.getFigureBoard(BoardFactory.FigureBoardType.TREE);
         FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
-        Position freeCell = freeCellsBoard.getFirstFreeCell();
-        Figure figure = figures.pop();
+        CalculationState state = new CalculationState(figures.pop(), freeCellsBoard.getFirstFreeCell());
 
-        while (freeCell != null ){
-            if (figures.isEmpty()){
-                placeLastFigure(figure, freeCell, figureBoard, freeCellsBoard);
-                if(!processedFigures.isEmpty()){
-                    figure = popFigure(figure, figureBoard);
-                    freeCell = popPosition(figure, freeCellsBoard);
-                } else {
-                    freeCell = null;
-                }
+        while (state.getFreeCell() != null) {
+            if (figures.isEmpty()) {
+                state = processLastFigure(state, figureBoard, freeCellsBoard);
             } else {
-                figure.setPosition(freeCell);
-                Collection<Position> coverage = figure.placeOnBoard(figureBoard);
-                if(!coverage.isEmpty()){
-                    Collection<Position> actualCoverage = freeCellsBoard.occupyCells(coverage);
-                    if (figures.size() <= freeCellsBoard.getFreeCellsCount()) {
-                        figureBoard.addFigure(figure);
-                        processedPositions.push(actualCoverage);
-                        processedFigures.push(figure);
-                        figure = figures.pop();
-                        freeCell = getNextFreeCell(figure, freeCellsBoard);
-                    } else {
-                        freeCellsBoard.freeCells(actualCoverage);
-                        freeCell = freeCellsBoard.getNextFreeCell(figure);
-                    }
-                } else {
-                    freeCell = freeCellsBoard.getNextFreeCell(figure);
-                }
-                while(freeCell == null && !processedFigures.isEmpty()) {
-                    figure = popFigure(figure, figureBoard);
-                    freeCell = popPosition(figure, freeCellsBoard);
-                }
+                state = processNextState(state, figureBoard, freeCellsBoard);
             }
         }
 
@@ -77,9 +50,59 @@ public class SemiRecursiveProcessor extends AbstractProcessor{
         getResultProcessor().addSummary(time);
     }
 
+    private CalculationState processNextState(final CalculationState state, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
+        state.getFigure().setPosition(state.getFreeCell());
+        Collection<Position> coverage = state.getFigure().placeOnBoard(figureBoard);
+        CalculationState newState;
+        if (!coverage.isEmpty()) {
+            newState = placeFigure(state, coverage, figureBoard, freeCellsBoard);
+        } else {
+            newState = state.getNextState(freeCellsBoard);
+        }
+        return getNextValidState(newState, figureBoard, freeCellsBoard);
+    }
+
+    private CalculationState placeFigure(final CalculationState state, Collection<Position> coverage, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
+        Collection<Position> actualCoverage = freeCellsBoard.occupyCells(coverage);
+        CalculationState newState;
+        if (figures.size() <= freeCellsBoard.getFreeCellsCount()) {
+            figureBoard.addFigure(state.getFigure());
+            processedPositions.push(actualCoverage);
+            processedFigures.push(state.getFigure());
+            Figure figure = figures.pop();
+            newState = new CalculationState(figure, getNextFreeCell(figure, freeCellsBoard));
+        } else {
+            freeCellsBoard.freeCells(actualCoverage);
+            newState = state.getNextState(freeCellsBoard);
+        }
+        return newState;
+    }
+
+    private CalculationState getNextValidState(final CalculationState state, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
+        Position freeCell = state.getFreeCell();
+        Figure figure = state.getFigure();
+        while (freeCell == null && !processedFigures.isEmpty()) {
+            figure = popFigure(figure, figureBoard);
+            freeCell = popPosition(figure, freeCellsBoard);
+        }
+        return new CalculationState(figure, freeCell);
+    }
+
+    private CalculationState processLastFigure(final CalculationState state, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
+        placeLastFigure(state, figureBoard, freeCellsBoard);
+        CalculationState newState;
+        if (!processedFigures.isEmpty()) {
+            Figure figure = popFigure(state.getFigure(), figureBoard);
+            newState = new CalculationState(figure, popPosition(figure, freeCellsBoard));
+        } else {
+            newState = new CalculationState(state.getFigure(), null);
+        }
+        return newState;
+    }
+
     private Position getNextFreeCell(Figure figure, FreeCellsBoard freeCellsBoard) {
         Position freeCell;
-        if(figure.isSameType(processedFigures.peek())){
+        if (figure.isSameType(processedFigures.peek())) {
             freeCell = freeCellsBoard.getNextFreeCell(processedFigures.peek());
         } else {
             freeCell = freeCellsBoard.getFirstFreeCell();
@@ -101,16 +124,40 @@ public class SemiRecursiveProcessor extends AbstractProcessor{
         return figure;
     }
 
-    private void placeLastFigure(Figure figure, Position freeCell, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
-        while (freeCell != null){
+    private void placeLastFigure(final CalculationState state, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
+        Position freeCell = state.getFreeCell();
+        Figure figure = state.getFigure();
+        while (freeCell != null) {
             figure.setPosition(freeCell);
             Collection<Position> coverage = figure.placeOnBoard(figureBoard);
-            if(!coverage.isEmpty()){
+            if (!coverage.isEmpty()) {
                 figureBoard.addFigure(figure);
                 getResultProcessor().addResult(figureBoard);
                 figureBoard.removeFigure(figure);
             }
             freeCell = freeCellsBoard.getNextFreeCell(figure);
+        }
+    }
+
+    private final class CalculationState {
+        private final Figure figure;
+        private final Position freeCell;
+
+        public CalculationState(Figure figure, Position freeCell) {
+            this.figure = figure;
+            this.freeCell = freeCell;
+        }
+
+        public Figure getFigure() {
+            return figure;
+        }
+
+        public Position getFreeCell() {
+            return freeCell;
+        }
+
+        public CalculationState getNextState(FreeCellsBoard freeCellsBoard) {
+            return new CalculationState(getFigure(), freeCellsBoard.getNextFreeCell(getFigure()));
         }
     }
 }

@@ -48,7 +48,7 @@ public class TreeFigureBoard extends AbstractFigureBoard {
             for (int column = 0; column < getWidth(); column++) {
                 Position position = new Position(line, column, this);
                 Figure figure = figures.get(position);
-                boardRepresentation.append(figure == null ? FREE_POSITION_MARKER : figure.getName());
+                boardRepresentation.append(figure == null ? FREE_POSITION_MARKER : figure.getBoardSymbol());
                 boardRepresentation.append(POSITION_SEPARATOR);
             }
             boardRepresentation.delete(boardRepresentation.length()-1,boardRepresentation.length());

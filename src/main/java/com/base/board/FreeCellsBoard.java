@@ -3,6 +3,7 @@ package com.base.board;
 import com.base.figures.Figure;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Contains the list of all free (not taken and not under attack) cells.
@@ -13,11 +14,6 @@ import java.util.*;
 public class FreeCellsBoard extends AbstractBoard {
     public static final String TAKEN_POSITION_MARKER = "X";
     private final NavigableSet<Position> freeCells = new TreeSet<>();
-
-    private FreeCellsBoard(int width, int height, SortedSet<Position> freeCells) {
-        super(width, height);
-        this.freeCells.addAll(freeCells);
-    }
 
     public FreeCellsBoard(int width, int height) {
         super(width, height);
@@ -35,11 +31,7 @@ public class FreeCellsBoard extends AbstractBoard {
      */
     public Collection<Position> occupyCells(Collection<Position> figureCoverage) {
         Collection<Position> realCoverage = new ArrayList<>(figureCoverage.size());
-        for (Position position : figureCoverage) {
-            if(freeCells.remove(position)){
-                realCoverage.add(position);
-            }
-        }
+        realCoverage.addAll(figureCoverage.stream().filter(freeCells::remove).collect(Collectors.toList()));
         return realCoverage;
     }
 

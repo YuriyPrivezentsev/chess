@@ -29,7 +29,7 @@ public abstract class FigureBoardTest<T extends FigureBoard> {
     }
 
     @Test
-    public void testTakenField() {
+    public void testOccupiedField() {
         assertTrue(figureBoard.hasFigure(new Position(1, 1, figureBoard)));
     }
 

@@ -12,7 +12,7 @@ import java.util.Collection;
  * @since 10/12/2015
  */
 public class Bishop extends LongDistanceFigure {
-    public static final String NAME = "B";
+    private static final Type TYPE = Type.BISHOP;
     private static final int PRIORITY = 2;
 
     public Bishop(Position position) {
@@ -35,8 +35,8 @@ public class Bishop extends LongDistanceFigure {
      *  {@inheritDoc}
      */
     @Override
-    public String getName() {
-        return NAME;
+    public Type getType() {
+        return TYPE;
     }
 
     /**

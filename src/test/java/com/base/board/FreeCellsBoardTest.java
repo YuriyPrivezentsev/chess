@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class FreeCellsBoardTest {
     @Test
-    public void testFreeCell() {
+    public void testGetFirstFreeCell() {
 
         FreeCellsBoard freeCellsBoard = new FreeCellsBoard(2, 2);
         Position position = new Position(0, 0, freeCellsBoard);
@@ -42,7 +42,7 @@ public class FreeCellsBoardTest {
     }
 
     @Test
-    public void testGetNextCell() {
+    public void testGetNextFreeCell() {
         FreeCellsBoard freeCellsBoard = new FreeCellsBoard(3, 3);
         Position position = new Position(1, 1, freeCellsBoard);
         Position nextFreeCell = freeCellsBoard.getNextFreeCell(position);

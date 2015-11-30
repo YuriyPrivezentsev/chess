@@ -12,6 +12,7 @@
         <log4j.version>1.2.17</log4j.version>
         <mockito.version>1.9.5</mockito.version>
         <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
+        <privilegedaccessor.version>1.2.2</privilegedaccessor.version>
     </properties>
 
     <build>
@@ -21,8 +22,21 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.base.client.CommandLineClient</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                 </configuration>
             </plugin>
         </plugins>
@@ -36,16 +50,15 @@
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
-      		<groupId>org.slf4j</groupId>
-      		<artifactId>slf4j-log4j12</artifactId>
-      		<version>${slf4j.version}</version>
-      	</dependency>
-      	<dependency>
-      		<groupId>log4j</groupId>
-      		<artifactId>log4j</artifactId>
-      		<version>${log4j.version}</version>
-      		<scope>runtime</scope>
-      	</dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
         <!-- TESTING -->
         <dependency>
             <groupId>junit</groupId>
@@ -54,9 +67,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-        	<groupId>org.mockito</groupId>
-        	<artifactId>mockito-all</artifactId>
-        	<version>${mockito.version}</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.e-movimento.tinytools</groupId>
+            <artifactId>privilegedaccessor</artifactId>
+            <version>${privilegedaccessor.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -67,18 +87,18 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <build>
-              <plugins>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-surefire-plugin</artifactId>
-                  <version>${maven-surefire-plugin.version}</version>
-                  <configuration>
-                    <excludes>
-                      <exclude>**/CalculationProcessTest.java</exclude>
-                    </excludes>
-                  </configuration>
-                </plugin>
-              </plugins>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/CalculationProcessTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
 
@@ -88,18 +108,18 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <build>
-              <plugins>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-surefire-plugin</artifactId>
-                  <version>${maven-surefire-plugin.version}</version>
-                  <configuration>
-                      <includes>
-                        <include>**/CalculationProcessTest.java</include>
-                      </includes>
-                  </configuration>
-                </plugin>
-              </plugins>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <includes>
+                                <include>**/CalculationProcessTest.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
         <profile>

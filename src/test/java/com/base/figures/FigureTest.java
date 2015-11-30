@@ -43,8 +43,8 @@ public abstract class FigureTest<T extends Figure> {
 
         assertEquals(figure.getClass(),newFigure.getClass());
         assertEquals(position.getLine(),newFigure.getPosition().getLine());
-        assertEquals(position.getColumn(),newFigure.getPosition().getColumn());
-        assertEquals(position.getWeightOnBoard(),newFigure.getPosition().getWeightOnBoard());
+        assertEquals(position.getColumn(), newFigure.getPosition().getColumn());
+        assertEquals(position.getWeightOnBoard(), newFigure.getPosition().getWeightOnBoard());
     }
 
     protected void performTest(Figure figure, int[][] checkBoard, int width, int height) {
@@ -75,7 +75,7 @@ public abstract class FigureTest<T extends Figure> {
     }
 
     @Test
-    public void testOverlapping() {
+    public void testNoPlacingUnderAttack() {
         TreeFigureBoard figureBoard = new TreeFigureBoard(7, 7);
         Position firstPosition = new Position(1, 1, figureBoard);
         T firstFigure = getNewFigure(firstPosition);
@@ -88,9 +88,30 @@ public abstract class FigureTest<T extends Figure> {
         assertTrue(overlappingFigurePositions.isEmpty());
     }
 
+    @Test
+    public void testType() {
+        T figure = getNewFigure(null);
+        assertEquals(getExpectedFigureType(), figure.getType());
+    }
+
+    @Test
+    public void testTypeFromBoardSymbol() {
+        Figure.Type figure = Figure.Type.fromBoardSymbol(getExpectedBoardSymbol());
+        assertEquals(getExpectedFigureType(), figure);
+    }
+
+    @Test
+    public void testCorrectBoardSymbol(){
+        assertEquals(getExpectedBoardSymbol(), getExpectedFigureType().getBoardSymbol());
+    }
+
     protected Position getOverlappingPosition(TreeFigureBoard figureBoard) {
         return new Position(1, 0, figureBoard);
     }
 
     protected abstract T getNewFigure(Position position);
+
+    protected abstract Figure.Type getExpectedFigureType();
+
+    protected abstract String getExpectedBoardSymbol();
 }

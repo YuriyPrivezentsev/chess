@@ -62,11 +62,16 @@ public abstract class AbstractFigure implements Figure {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("StringEquality")
     @Override
     public boolean isSameType(Figure other) {
-        /*Here is a little hack in speed: since we know that getName returns constant and constants are inlined
-        * we can allow ourself a bit of non-strict behavior*/
-        return other != null && getName() == other.getName();
+        return other != null && getType() == other.getType();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getBoardSymbol() {
+        return getType().getBoardSymbol();
     }
 }

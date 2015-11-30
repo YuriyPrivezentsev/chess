@@ -22,13 +22,13 @@ public class BoardFactoryTest {
     }
 
     @Test
-    public void testArrayFigureBoard() {
+    public void testBuildArrayFigureBoard() {
         FigureBoard figureBoard = boardFactory.getFigureBoard(BoardFactory.FigureBoardType.ARRAY);
         assertEquals(ArrayFigureBoard.class, figureBoard.getClass());
     }
 
     @Test
-    public void testTreeFigureBoard() {
+    public void testBuildTreeFigureBoard() {
         FigureBoard figureBoard = boardFactory.getFigureBoard(BoardFactory.FigureBoardType.TREE);
         assertEquals(TreeFigureBoard.class, figureBoard.getClass());
     }

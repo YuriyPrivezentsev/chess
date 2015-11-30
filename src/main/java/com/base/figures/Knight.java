@@ -13,7 +13,7 @@ import java.util.Collection;
  * @since 10/12/2015
  */
 public class Knight extends AbstractFigure {
-    public static final String NAME = "N";
+    private static final Type TYPE = Type.KNIGHT;
     public static final int KNIGHT_COVERAGE_CAPACITY = 9;
     private static final int PRIORITY = 4;
 
@@ -66,8 +66,8 @@ public class Knight extends AbstractFigure {
      *  {@inheritDoc}
      */
     @Override
-    public String getName() {
-        return NAME;
+    public Type getType() {
+        return TYPE;
     }
 
     /**
