@@ -49,26 +49,26 @@ public class RecursiveProcessor extends AbstractProcessor {
         freeCell = getNextFreeCell(freeCellsBoard, previousProcessedFigure, figure);
 
         while (freeCell != null) {
-            tryCell(freeCell, figure, freeCellsBoard, figureBoard);
+            tryCell(figure, freeCell, figureBoard, freeCellsBoard);
             freeCell = freeCellsBoard.getNextFreeCell(freeCell);
         }
         figures.push(figure);
     }
 
-    private void tryCell(Position freeCell, Figure figure, FreeCellsBoard freeCellsBoard, FigureBoard figureBoard) {
+    private void tryCell(Figure figure, Position freeCell, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
         figure.setPosition(freeCell);
         Collection<Position> figureCoverage = figure.placeOnBoard(figureBoard);
         if (!figureCoverage.isEmpty()) {
             figureBoard.addFigure(figure);
 
-            Collection<Position> nonOverlappedCoverage = placeFigure(figure, figureBoard, freeCellsBoard, figureCoverage);
+            Collection<Position> nonOverlappedCoverage = placeFigure(figure, figureCoverage, figureBoard, freeCellsBoard);
 
             figureBoard.removeFigure(figure);
             freeCellsBoard.freeCells(nonOverlappedCoverage);
         }
     }
 
-    private Collection<Position> placeFigure(Figure figure, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard, Collection<Position> figureCoverage) {
+    private Collection<Position> placeFigure(Figure figure, Collection<Position> figureCoverage, FigureBoard figureBoard, FreeCellsBoard freeCellsBoard) {
         @SuppressWarnings("unchecked")
         Collection<Position> nonOverlappedCoverage = Collections.EMPTY_LIST;
         if (figures.isEmpty()) {
