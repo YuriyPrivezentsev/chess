@@ -16,11 +16,14 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  * Unit test for @link{RecursiveProcessor}
@@ -34,6 +37,11 @@ import static org.mockito.Mockito.*;
  */
 @SuppressWarnings("unchecked")
 public class RecursiveProcessorTest {
+    private static final String PLACE_FIGURE_SIGNATURE = "placeFigure(" +
+            Figure.class.getName() + "," +
+            Collection.class.getName() + "," +
+            FigureBoard.class.getName() + "," +
+            FreeCellsBoard.class.getName() + ")";
     private static ProcessorBuilder processorBuilder;
 
     private RecursiveProcessor processor;
@@ -73,15 +81,43 @@ public class RecursiveProcessorTest {
         Deque<Figure> figures = (Deque<Figure>) PA.getValue(processor, "figures");
         figures.clear();
 
-        String signature = "placeFigure(" +
-                Figure.class.getName() + "," +
-                Collection.class.getName() + "," +
-                FigureBoard.class.getName() + "," +
-                FreeCellsBoard.class.getName() + ")";
-        PA.invokeMethod(processor, signature, figure, coverage, figureBoard, freeCellsBoard);
+        PA.invokeMethod(processor, PLACE_FIGURE_SIGNATURE, figure, coverage, figureBoard, freeCellsBoard);
 
         verify(resultProcessor, times(1)).addResult(any(FigureBoard.class));
     }
+
+    @Test
+    public void testPlaceFigureReturn() {
+        Deque<Figure> figures = (Deque<Figure>) PA.getValue(processor, "figures");
+        Figure rook = figures.pop();
+        Position rookPosition = new Position(0, 0, freeCellsBoard);
+        rook.setPosition(rookPosition);
+        freeCellsBoard.occupyCells(rook.placeOnBoard(figureBoard));
+        figureBoard.addFigure(rook);
+
+        Figure king = figures.pop();
+        Position kingPosition = new Position(1, 2, figureBoard);
+        king.setPosition(kingPosition);
+        Collection<Position> kingCoverage = king.placeOnBoard(figureBoard);
+
+        Collection<Position> realCoverage = (Collection<Position>) PA.invokeMethod(processor, PLACE_FIGURE_SIGNATURE, king, kingCoverage, figureBoard, freeCellsBoard);
+
+        assertEquals(4, realCoverage.size());
+
+        ArrayList<Position> resultPositions = new ArrayList<>(4);
+        resultPositions.addAll(realCoverage);
+        for(int line = 1, i=0; line <= 2; line++){
+            for (int column = 1; column <= 2; column++, i++){
+                Position position = resultPositions.get(i);
+                assertEquals(line, position.getLine());
+                assertEquals(column, position.getColumn());
+            }
+        }
+
+        assertEquals(1, resultPositions.get(0).getLine());
+        assertEquals(1, resultPositions.get(0).getLine());
+    }
+
 
     @Test
     public void testTryCellUnsuccessful() {
