@@ -78,7 +78,7 @@ public class SemiRecursiveProcessorTest {
     }
 
     @Test
-    public void testPlaceNextFigure() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public void testProcessNextState() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         processor = (SemiRecursiveProcessor) processorBuilder.fromString("3x3,2xK,1xR");
         Deque<Figure> figures = (Deque<Figure>) PA.getValue(processor, "figures");
         BoardFactory boardFactory = new BoardFactory(3, 3);
@@ -93,7 +93,7 @@ public class SemiRecursiveProcessorTest {
         freeCellsBoard.occupyCells(positions);
 
         Figure king = new King();
-        Position position = new Position(1, 0, freeCellsBoard);
+        Position position = new Position(2, 0, freeCellsBoard);
         Object calculationState = getCalculationState(processor, king, position);
 
         String signature = "processNextState(" +
@@ -106,8 +106,52 @@ public class SemiRecursiveProcessorTest {
         Position freeCell = (Position) PA.getValue(resultState, "freeCell");
 
         assertTrue(resultFigure.isSameType(new King()));
-        assertEquals(1, freeCell.getLine());
+        assertEquals(2, freeCell.getLine());
         assertEquals(2, freeCell.getColumn());
+    }
+
+    @Test
+    public void testGetNextValidState() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        processor = (SemiRecursiveProcessor) processorBuilder.fromString("3x3,2xK,1xR");
+        Deque<Figure> figures = (Deque<Figure>) PA.getValue(processor, "figures");
+        Deque<Figure> processedFigures = (Deque<Figure>) PA.getValue(processor, "processedFigures");
+        Deque<Collection<Position>> processedPositions = (Deque<Collection<Position>>) PA.getValue(processor, "processedPositions");
+        BoardFactory boardFactory = new BoardFactory(3, 3);
+
+        FigureBoard figureBoard = boardFactory.getFigureBoard(BoardFactory.FigureBoardType.ARRAY);
+        FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
+
+        Figure rook = figures.pop();
+        rook.setPosition(new Position(0, 0, figureBoard));
+        Collection<Position> rookPositions = rook.placeOnBoard(figureBoard);
+        figureBoard.addFigure(rook);
+        processedFigures.push(rook);
+        Collection<Position> realRookCoverage = freeCellsBoard.occupyCells(rookPositions);
+        processedPositions.push(realRookCoverage);
+
+        Figure king = figures.pop();
+        king.setPosition(new Position(1, 2, figureBoard));
+        Collection<Position> kingPositions = king.placeOnBoard(figureBoard);
+        figureBoard.addFigure(king);
+        processedFigures.push(king);
+        Collection<Position> realKingCoverage = freeCellsBoard.occupyCells(kingPositions);
+        processedPositions.push(realKingCoverage);
+
+        Figure secondKing = figures.pop();
+        Object calculationState = getCalculationState(processor, secondKing, null);
+        String signature = "getNextValidState(" +
+                calculationState.getClass().getName() + "," +
+                FigureBoard.class.getName() + "," +
+                FreeCellsBoard.class.getName() + ")";
+        Object resultState = PA.invokeMethod(processor, signature, calculationState, figureBoard, freeCellsBoard);
+
+        Figure resultFigure = (Figure) PA.getValue(resultState, "figure");
+        Position freeCell = (Position) PA.getValue(resultState, "freeCell");
+
+        assertEquals(king, resultFigure);
+        assertEquals(1, processedFigures.size());
+        assertEquals(2, freeCell.getLine());
+        assertEquals(1, freeCell.getColumn());
     }
 
     private Object getCalculationState(SemiRecursiveProcessor processor, Figure figure, Position position)
