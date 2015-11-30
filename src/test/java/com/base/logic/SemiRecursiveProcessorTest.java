@@ -154,6 +154,47 @@ public class SemiRecursiveProcessorTest {
         assertEquals(1, freeCell.getColumn());
     }
 
+    @Test
+    public void testPlaceFigure() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        processor = (SemiRecursiveProcessor) processorBuilder.fromString("3x3,2xK,1xR");
+        Deque<Figure> figures = (Deque<Figure>) PA.getValue(processor, "figures");
+        BoardFactory boardFactory = new BoardFactory(3, 3);
+
+        FigureBoard figureBoard = boardFactory.getFigureBoard(BoardFactory.FigureBoardType.ARRAY);
+        FreeCellsBoard freeCellsBoard = boardFactory.getFreeCellsBoard();
+
+        Figure rook = figures.pop();
+        Position initialPosition = new Position(0, 0, figureBoard);
+        rook.setPosition(initialPosition);
+        Collection<Position> coverage = rook.placeOnBoard(figureBoard);
+
+        Object calculationState = getCalculationState(processor, rook, initialPosition);
+        String signature = "placeFigure(" +
+                calculationState.getClass().getName() + "," +
+                Collection.class.getName() + "," +
+                FigureBoard.class.getName() + "," +
+                FreeCellsBoard.class.getName() + ")";
+        Object resultState = PA.invokeMethod(processor, signature, calculationState, coverage, figureBoard, freeCellsBoard);
+
+
+        Figure resultFigure = (Figure) PA.getValue(resultState, "figure");
+        Position freeCell = (Position) PA.getValue(resultState, "freeCell");
+
+        assertEquals(Figure.Type.KING, resultFigure.getType());
+        assertEquals(1, freeCell.getLine());
+        assertEquals(1, freeCell.getColumn());
+
+        Deque<Figure> processedFigures = (Deque<Figure>) PA.getValue(processor, "processedFigures");
+        assertEquals(1, processedFigures.size());
+        assertTrue(processedFigures.peek().isSameType(rook));
+
+        Deque<Collection<Position>> processedPositions = (Deque<Collection<Position>>) PA.getValue(processor, "processedPositions");
+        assertEquals(1, processedPositions.size());
+
+        assertEquals(1, figures.size());
+        assertEquals(Figure.Type.KING,figures.peek().getType());
+    }
+
     private Object getCalculationState(SemiRecursiveProcessor processor, Figure figure, Position position)
             throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
         Class<?> calculationStateClass =
