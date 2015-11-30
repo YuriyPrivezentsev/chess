@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  */
 public class CommandLineClient {
     public static final String BOARD_PROMPT = "Enter the parameters in form MxN,FxQ,FxQ,..." +
-            "\r\n where M and N are desk dimensions, F is figure name of Q,K,N,R,B and Qa if quantity" +
+            "\r\n where M and N are desk dimensions, F is figure name of Q,K,N,R,B and Q is quantity" +
             "\r\n or type EXIT for termination.";
     private static final String PARAMETERS_INFO = "Current processor uses %s result board type, and %s processor type, and %s outpur.";
     private static final String EXIT_COMMAND = "EXIT";
